@@ -1,0 +1,78 @@
+.filterButtons button {
+     outline: none;
+     border: 1px solid black;
+     font-size: 16px;
+     padding: 1px 5px;
+}
+
+.charts {
+     margin-top: 5px;
+}
+
+.chartHeader {
+     display: flex;
+     justify-content: space-between;
+}
+
+
+.chartButtons button {
+     margin: 0px 2px;
+     padding: 2px;
+     outline: none;
+     border: none;
+     background-color: transparent;
+}
+
+.chartButtons img {
+     width: 25px;
+     height: 25px;
+}
+
+.optionCharts {}
+
+.expensesAndIncomeReport{
+     margin-top: 5px;
+}
+
+.expensesAndIncomeButtons{
+      display: flex;
+      /* background-color: red; */
+      padding: 2px 0px;
+      justify-content: center;
+      align-items: center; 
+}
+.expensesAndIncomeButtons button{
+     width: 80px;
+     margin: 0px 5px;
+     outline: none;
+     border: none;
+     background-color: transparent;
+     box-shadow: 1px 1px 2px;
+}
+
+.progress{
+     margin-bottom:10px;
+} 
+
+.ExpensesTypes span{
+     font-weight: 500;
+     position: relative;
+     /* margin-left:12px; */
+
+}
+
+.ExpensesTypes .bulet{
+     position: relative;
+}
+.ExpensesTypes .bulet::before{
+content: '';
+position: absolute;
+width: 10px;
+height: 10px;
+border-radius: 50%;
+background-color: red;
+top: 25%;
+left:-1%;
+}
+
+ 

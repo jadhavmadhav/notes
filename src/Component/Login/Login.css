@@ -1,0 +1,150 @@
+*{
+     padding: 0px;
+     margin: 0px;
+     box-sizing: border-box;
+}
+ 
+.container{ 
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form,.registar-form{
+     width: 80%;
+     border-radius: 5px;
+      box-shadow: 0.5px 0.5px 2px;
+      display: flex; 
+      align-items: center;
+      flex-direction: column;
+}
+
+.login-header{
+     width:80%;
+     font-weight: 600;
+     margin-top: 10px;
+}
+.login-field , .registr-field{
+     width: 80%; 
+     margin: 15px 0px; 
+     position: relative;
+}
+
+.login-field input,.registr-field input{
+     width: 100%;
+     outline: none;
+     border: none; 
+     position: relative;
+}
+.login-field::before,.registr-field::before{
+     margin-bottom: -1px;
+     position: absolute;
+     bottom: 0%;
+     z-index: 10;
+     content:'';
+     width: 100%;
+     height: 2px;
+     background:linear-gradient(80deg,rgb(241, 18, 122),red);
+     
+}
+.login-button{
+     width: 80%;
+     display: flex; 
+     justify-content: center;
+     margin: 10px 0px;
+}
+
+.login-button button{
+     padding: 4px 15px;
+     width: 100%;
+     outline: none;
+     border: none;
+     text-transform:capitalize;
+     font-weight: 600; 
+     color: white;
+     background:linear-gradient(80deg,red,rgb(241, 18, 122));
+      
+}
+
+.login-button button:active{
+     background:linear-gradient(red,rgb(245, 52, 52));
+}
+.login-registr-button{ 
+     width: 80%;
+     display: flex; 
+     justify-content:start; 
+}
+.login-registr-button button{
+     font-size: 18px;
+     letter-spacing: 1.5px; 
+     outline: none;
+     border: none;
+     background-color:transparent;
+     color: red;
+     text-decoration: underline;
+     margin-bottom: 15px;
+}
+.login-registr-button button:active{
+color: rgb(158, 4, 4);
+}
+
+.loginWith-google{
+     width: 80%;
+     margin-bottom: 15px;
+}
+.loginWith-google button{
+     color: white;
+     padding: 4px 0px;
+     width: 100%;
+     outline: none;
+     border: none;
+     background-color: red;
+}
+.loginWith-facebook{
+width: 80%;
+margin-bottom: 15px;
+}
+
+.loginWith-facebook button{  
+     color: white;
+     padding: 4px 0px;
+     width: 100%;
+     outline: none;
+     border: none;
+     background: linear-gradient(90deg ,rgb(3, 166, 172) ,rgb(107, 196, 248) );
+
+}
+.signUp-button{
+     width: 80%;
+}
+.signUp-button button{
+     width: 100%;
+     color: white;
+     font-size: 18px;
+     font-weight: 800;
+     outline: none;
+     border: none;
+     padding: 4px 0px;
+     background: linear-gradient(50deg ,green,rgb(3, 211, 149) );
+
+}
+
+.registar-bottomSection{
+     width: 80%;
+     /* height: 50px;  */
+     display: flex;
+     margin: 4px 0px;
+     justify-content: space-between;
+     align-items: flex-start;
+}
+
+.registar-bottomSection button{
+     border: none;
+     outline: none;
+     background-color: transparent;
+     color: red;
+     font-weight: 500;
+     text-decoration: underline;
+}

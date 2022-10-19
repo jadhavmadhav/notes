@@ -1,0 +1,43 @@
+ 
+:root{
+  --bgheader:rgb(156, 155, 155);
+  --bgactive:lightblue;
+}
+  
+ .maincontainer{  
+  margin: 0% 5%;
+ }
+
+ .header{ 
+  background-color: var(--bgheader);  
+  width: 100%;
+  position: sticky;
+  top: 0px;
+ }
+
+ .content{  
+  padding:0% 5%;
+  /* overflow-y: auto; */
+ }
+ 
+  @media screen and (max-width:768px) {
+    .maincontainer{  
+      margin: 0%; 
+      overflow: hidden;
+     }
+    .header{  
+      top:93%;
+      position:fixed;
+      background-color: white;
+      /* bottom:0%;   */
+     }
+     .content{  
+      padding:0% 2%;
+      /* overflow-y: auto; */
+     }
+
+      
+    
+  }
+ 
+ 

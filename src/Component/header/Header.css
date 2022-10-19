@@ -1,0 +1,113 @@
+.headercontainer {
+     /* width: 100%; */
+     display: flex;
+     align-items: center;
+     padding: 0px 2%;
+}
+
+.logo {}
+
+.icon {
+     width: 50px;
+     height: 50px;
+     background-color: wheat;
+     border-radius: 50%;
+     display: flex;
+     overflow: hidden;
+     text-align: center;
+     justify-content: center;
+     align-items: center;
+}
+
+.icon h4 {
+     font-weight: 900;
+     font-size: 25px;
+}
+
+.Navbar {}
+
+.navbar_item {
+     display: flex;
+     justify-content: end;
+}
+
+.nav-link {
+     margin-left: 20px;
+     font-size: 18px;
+     font-weight: 600;
+}
+
+
+
+
+.profile {
+     display: flex;
+     justify-content: end;
+}
+
+.profileImage {
+     width: 50px;
+     height: 50px;
+     background-color: blanchedalmond;
+     border-radius: 50%;
+     overflow: hidden;
+}
+
+.profileImage img {
+     width: 100%;
+     height: 100%;
+     /* border-radius: 50%; */
+}
+
+.mobileHeader {
+     display: none;
+}
+
+@media screen and (max-width:768px) {
+
+     .desktopHeader {
+          display: none;
+     }
+
+     .mobileHeader {
+          display: block;
+          width: 100%;
+          height: 60px;
+     }
+
+     .Navbar {
+          height: 100%;
+          width: 95%;
+     }
+
+     .navbar_item {
+          display: flex;
+          height: 100%;
+          width: 100%;
+          align-items: center;
+          justify-content: space-between;
+     }
+
+     .nav-link .Add {
+          margin-bottom: 25px;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          border: 2px solid black;
+          background-color: white;
+          font-size: 40px;
+          font-weight:lighter;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 0.2px 0.2px 4px;
+     }
+    
+     .nav-link .Add:active , .nav-link img:active{
+          scale: 1.1;
+     }
+
+     .nav-link img {
+          width: 30px;
+     }
+}
