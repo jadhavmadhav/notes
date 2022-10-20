@@ -26,6 +26,7 @@
       overflow: hidden;
      }
     .header{  
+      z-index: 1000;
       top:93%;
       position:fixed;
       background-color: white;
@@ -33,6 +34,7 @@
      }
      .content{  
       padding:0% 2%;
+      margin-bottom:15%;
       /* overflow-y: auto; */
      }
 
