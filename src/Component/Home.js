@@ -4,15 +4,20 @@ import { Chart } from "react-google-charts";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+
 import {
   BarChart,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
-  Legend,
+  // Tooltip,
+  // Legend,
 } from "recharts";
+import SelectionModal from "./addSelection/SelectionModal";
+import { Outlet } from "react-router-dom";
 
 export const data = [
   ["type", "amount"],
@@ -121,222 +126,256 @@ export default function Home() {
     "https://www.azquotes.com/vangogh-image-quotes/79/90/Quotation-Bill-Gates-I-am-not-in-competition-with-anyone-but-myself-My-79-90-02.jpg",
   ];
 
+  ChartJS.register(ArcElement, Tooltip, Legend);
+
+  const data = {
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    datasets: [
+      {
+        label: "# of Votes",
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+          "rgba(255, 159, 64, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+
   return (
-    <div className="row mt-1">
-      <div className="expense-charts">
-        <div className="chartHeader">
-          <div className="filterButtons">
-            <button>Year</button>
-            <button>Month</button>
-            <button>Weekly</button>
-            <button>Day</button>
+    <div>
+      <div className="row mt-1">
+        <div className="expense-charts">
+          <div className="chartHeader">
+            <div className="filterButtons">
+              <button>Year</button>
+              <button>Month</button>
+              <button>Weekly</button>
+              <button>Day</button>
+            </div>
+
+            <div className="chartButtons">
+              <button
+                style={pieChart ? Active : NotActive}
+                onClick={() => {
+                  setpieChart(true);
+                }}
+              >
+                <img src={process.env.PUBLIC_URL + "/images/pie.png"} alt="" />
+              </button>
+              <button
+                style={pieChart ? NotActive : Active}
+                onClick={() => {
+                  setpieChart(false);
+                }}
+              >
+                <img src={process.env.PUBLIC_URL + "/images/bar.png"} alt="" />
+              </button>
+            </div>
           </div>
 
-          <div className="chartButtons">
-            <button
-              style={pieChart ? Active : NotActive}
-              onClick={() => {
-                setpieChart(true);
+          {pieChart ? (
+            // <Chart
+            //   chartType="PieChart"
+            //   data={data}
+            //   options={options}
+            //   width={"100%"}
+            //   height={"400px"}
+            // />
+            <Pie data={data} />
+          ) : (
+            <BarChart
+              width={400}
+              height={300}
+              data={barData}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 5,
               }}
             >
-              <img src={process.env.PUBLIC_URL + "/images/pie.png"} alt="" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Income" stackId="a" fill="#8884d8" />
+              {/* <Bar dataKey="amt" stackId="a" fill="#82ca9d" /> */}
+              <Bar dataKey="Expenses" fill="#ffc658" />
+            </BarChart>
+          )}
+        </div>
+
+        <div className="expensesAndIncomeReport">
+          <div className="expensesAndIncomeButtons">
+            <button
+              onClick={() => setExpenses(true)}
+              style={Expenses ? Active : NotActive}
+            >
+              Expenses
             </button>
             <button
-              style={pieChart ? NotActive : Active}
-              onClick={() => {
-                setpieChart(false);
-              }}
+              onClick={() => setExpenses(false)}
+              style={Expenses ? NotActive : Active}
             >
-              <img src={process.env.PUBLIC_URL + "/images/bar.png"} alt="" />
+              Income
             </button>
           </div>
-        </div>
 
-        {pieChart ? (
-          <Chart
-            chartType="PieChart"
-            data={data}
-            options={options}
-            width={"100%"}
-            height={"400px"}
-          />
-        ) : (
-          <BarChart
-            width={400}
-            height={300}
-            data={barData}
-            margin={{
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="Income" stackId="a" fill="#8884d8" />
-            {/* <Bar dataKey="amt" stackId="a" fill="#82ca9d" /> */}
-            <Bar dataKey="Expenses" fill="#ffc658" />
-          </BarChart>
-        )}
-      </div>
+          <div className="mt-4">
+            <div className="ExpensesTypes">
+              <div
+                className="d-flex"
+                style={{ justifyContent: "space-between", padding: "0px 10px" }}
+              >
+                <div>
+                  <span className="bulet"></span>
+                  <span className="mx-3">Shopping:</span>
+                </div>
+                <span>250</span>
+              </div>
+              <div className=" progress">
+                <div
+                  className="progress-bar bg-success"
+                  role="progressbar"
+                  style={{ width: "25%" }}
+                  aria-valuenow="25"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+            </div>
 
-      <div className="expensesAndIncomeReport">
-        <div className="expensesAndIncomeButtons">
-          <button
-            onClick={() => setExpenses(true)}
-            style={Expenses ? Active : NotActive}
-          >
-            Expenses
-          </button>
-          <button
-            onClick={() => setExpenses(false)}
-            style={Expenses ? NotActive : Active}
-          >
-            Income
-          </button>
-        </div>
-
-        <div className="mt-4">
-          <div className="ExpensesTypes">
-            <div
-              className="d-flex"
-              style={{ justifyContent: "space-between", padding: "0px 10px" }}
-            >
+            <div className="ExpensesTypes">
               <div>
                 <span className="bulet"></span>
-                <span className="mx-3">Shopping:</span>
+                <span className="mx-3">Housing:</span>
               </div>
-              <span>250</span>
-            </div>
-            <div className=" progress">
-              <div
-                className="progress-bar bg-success"
-                role="progressbar"
-                style={{ width: "25%" }}
-                aria-valuenow="25"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              ></div>
-            </div>
-          </div>
-
-          <div className="ExpensesTypes">
-            <div>
-              <span className="bulet"></span>
-              <span className="mx-3">Housing:</span>
-            </div>
-            <div className=" progress">
-              <div
-                className="progress-bar bg-info"
-                role="progressbar"
-                style={{ width: "50%" }}
-                aria-valuenow="50"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              ></div>
-            </div>
-          </div>
-
-          <div className="ExpensesTypes">
-            <div>
-              <span className="bulet"></span>
-              <span className="mx-3">Food:</span>
-            </div>
-            <div className="progress">
-              <div
-                className="progress-bar bg-warning"
-                role="progressbar"
-                style={{ width: "75%" }}
-                aria-valuenow="75"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              ></div>
-            </div>
-          </div>
-
-          <div className="ExpensesTypes">
-            <div>
-              <span className="bulet"></span>
-              <span className="mx-3">Subcription:</span>
+              <div className=" progress">
+                <div
+                  className="progress-bar bg-info"
+                  role="progressbar"
+                  style={{ width: "50%" }}
+                  aria-valuenow="50"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
             </div>
 
-            <div className="progress">
-              <div
-                className="progress-bar bg-danger"
-                role="progressbar"
-                style={{ width: "100%" }}
-                aria-valuenow="100"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              ></div>
+            <div className="ExpensesTypes">
+              <div>
+                <span className="bulet"></span>
+                <span className="mx-3">Food:</span>
+              </div>
+              <div className="progress">
+                <div
+                  className="progress-bar bg-warning"
+                  role="progressbar"
+                  style={{ width: "75%" }}
+                  aria-valuenow="75"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+            </div>
+
+            <div className="ExpensesTypes">
+              <div>
+                <span className="bulet"></span>
+                <span className="mx-3">Subcription:</span>
+              </div>
+
+              <div className="progress">
+                <div
+                  className="progress-bar bg-danger"
+                  role="progressbar"
+                  style={{ width: "100%" }}
+                  aria-valuenow="100"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <Carousel
-        className="taskCarousel"
-        responsive={responsive}
-        minimumTouchDrag={50}
-        arrows={false}
-        autoPlay={true}
-        infinite
-      >
-        {carouselData.map((img) => {
-          return (
-            <div className="carouselItem">
-              <img src={img} alt="121" />
-            </div>
-          );
-        })}
-      </Carousel>
-
-      <div className="tasksContainer">
-        <div className="taskHeader">
-          <h4>Task's</h4>
-        </div>
-        <div className="row mt-2">
-          {TaskData.map((ele) => {
+        <Carousel
+          className="taskCarousel"
+          responsive={responsive}
+          minimumTouchDrag={50}
+          arrows={false}
+          autoPlay={true}
+          infinite
+        >
+          {carouselData.map((img) => {
             return (
-              <div className="col-4 col-md-3 ">
-                <div className=" taskFiles">
-                  <img
-                    src={process.env.PUBLIC_URL + "/images/file.png"}
-                    alt=""
-                  />
-                  <span>{ele.title}</span>
-                  <p className="date">{ele.date}</p>
-                </div>
+              <div className="carouselItem">
+                <img src={img} alt="121" />
               </div>
             );
           })}
-        </div>
-      </div>
+        </Carousel>
 
-      <div className="notesContainer">
-        <div className="notesHeader">
-          <h4>Note's</h4>
-        </div>
-        <div className="row mt-2">
-          {NotesData.map((ele) => {
-            return (
-              <div className="col-4 col-md-3 ">
-                <div className=" taskFiles">
-                  <img
-                    src={process.env.PUBLIC_URL + "/images/notes.png"}
-                    alt=""
-                  />
-                  <span>{ele.title}</span>
-                  <p className="date">{ele.date}</p>
+        <div className="tasksContainer">
+          <div className="taskHeader">
+            <h4>Task's</h4>
+          </div>
+          <div className="row mt-2">
+            {TaskData.map((ele) => {
+              return (
+                <div className="col-4 col-md-3 ">
+                  <div className=" taskFiles">
+                    <img
+                      src={process.env.PUBLIC_URL + "/images/file.png"}
+                      alt=""
+                    />
+                    <span>{ele.title}</span>
+                    <p className="date">{ele.date}</p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="notesContainer">
+          <div className="notesHeader">
+            <h4>Note's</h4>
+          </div>
+          <div className="row mt-2">
+            {NotesData.map((ele) => {
+              return (
+                <div className="col-4 col-md-3 ">
+                  <div className=" taskFiles">
+                    <img
+                      src={process.env.PUBLIC_URL + "/images/notes.png"}
+                      alt=""
+                    />
+                    <span>{ele.title}</span>
+                    <p className="date">{ele.date}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
+      <Outlet/>
     </div>
   );
 }

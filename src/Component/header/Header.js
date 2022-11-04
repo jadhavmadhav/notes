@@ -1,11 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom' 
 import './Header.css'
 
 export default function Header() {
-  return (
-    <div style={{ width: '100%' }}>
+   
+  return ( 
       <div className='row headercontainer desktopHeader'>
         <div className='col-4 col-md-1 logo'>
           <div className='icon'>
@@ -26,35 +25,33 @@ export default function Header() {
             <img src={process.env.PUBLIC_URL + '/images/madhav.jpeg'} alt="" />
           </div>
         </div>
+      </div> 
+  )
+}
+
+export const MobileBottomHeader =({handelSelectionModal})=>{
+
+  return( 
+
+    <div className='Navbar mobileHeader'>
+      <div className='bottomNavbar_items'>
+        <Link to='/' className='bottomNav-link'>
+          <img src={process.env.PUBLIC_URL + '/images/home.png'} alt="" />
+        </Link>
+        <Link className='bottomNav-link'>
+          <img src={process.env.PUBLIC_URL + '/images/expense.png'} alt="" />
+        </Link>
+        <Link className='bottomNav-link' onClick={()=>{handelSelectionModal()}}>
+           <img className='Add' src={process.env.PUBLIC_URL +'/images/add.png'} alt="" />
+        </Link>
+        <Link className='bottomNav-link'>
+          <img src={process.env.PUBLIC_URL + '/images/list-check.png'} alt="" />
+        </Link>
+        <Link className='bottomNav-link'>
+          <img src={process.env.PUBLIC_URL + '/images/note.png'} alt="" />
+        </Link>
       </div>
-
-      {/*  ---- mobile header------------ */}
-
-      <div className='mobileHeader'>
-
-        <div className='Navbar'>
-          <div className='navbar_item'>
-            <Link className='nav-link'>
-              <img src={process.env.PUBLIC_URL + '/images/home.png'} alt="" />
-            </Link>
-            <Link className='nav-link'>
-              <img src={process.env.PUBLIC_URL + '/images/expense.png'} alt="" />
-            </Link>
-            <Link className='nav-link'>
-              <div className='Add'>+</div>
-            </Link>
-            <Link className='nav-link'>
-              <img src={process.env.PUBLIC_URL + '/images/list-check.png'} alt="" />
-            </Link>
-            <Link className='nav-link'>
-              <img src={process.env.PUBLIC_URL + '/images/note.png'} alt="" />
-            </Link>
-          </div>
-        </div>
-
-      </div>
-
     </div>
-
+ 
   )
 }
