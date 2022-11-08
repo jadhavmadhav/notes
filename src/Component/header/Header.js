@@ -21,9 +21,9 @@ export default function Header() {
           </div>
         </div>
         <div className='col-4 col-md-1 profile'>
-          <div className='profileImage'>
+          <Link to='profile' className='profileImage'>
             <img src={process.env.PUBLIC_URL + '/images/madhav.jpeg'} alt="" />
-          </div>
+          </Link>
         </div>
       </div> 
   )
@@ -38,16 +38,16 @@ export const MobileBottomHeader =({handelSelectionModal})=>{
         <Link to='/' className='bottomNav-link'>
           <img src={process.env.PUBLIC_URL + '/images/home.png'} alt="" />
         </Link>
-        <Link className='bottomNav-link'>
+        <Link to='spead' className='bottomNav-link'>
           <img src={process.env.PUBLIC_URL + '/images/expense.png'} alt="" />
         </Link>
         <Link className='bottomNav-link' onClick={()=>{handelSelectionModal()}}>
            <img className='Add' src={process.env.PUBLIC_URL +'/images/add.png'} alt="" />
         </Link>
-        <Link className='bottomNav-link'>
+        <Link to='task' className='bottomNav-link'>
           <img src={process.env.PUBLIC_URL + '/images/list-check.png'} alt="" />
         </Link>
-        <Link className='bottomNav-link'>
+        <Link to='notes' className='bottomNav-link'>
           <img src={process.env.PUBLIC_URL + '/images/note.png'} alt="" />
         </Link>
       </div>

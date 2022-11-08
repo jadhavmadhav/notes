@@ -1,23 +1,30 @@
-import React,{useContext} from 'react'
-import {SelectionContext} from './addSelection/SelectionModal'
+import React, { useContext } from 'react'
+import { SelectionContext } from './SelectionModal'
 import './AddExpenses.css'
+
+
 
 export default function AddExpenses({ handleRemoveSelectionModal }) {
      const [select, setSelect] = React.useState('Select Catagories');
 
      const contextData = useContext(SelectionContext);
-     const{setSelection,setaddExpenses,setaddIncome}=contextData
-    const handleAdd=()=>{
-      setSelection(true) 
-      setaddExpenses(false)
-      setaddIncome(false) 
-    }
+     const { setSelection, setaddExpenses, setaddIncome,handleBackButton } = contextData
+     const handleAdd = () => {
+          setSelection(true)
+          setaddExpenses(false)
+          setaddIncome(false)
+     }
+
+    
      return (
           <div className="addExpensesContainer">
-          <h5>Add Expenses</h5>
+               <h5>Add Expenses</h5>
+               <div>
+                    <button className='backButton' onClick={()=>handleBackButton()}> <span>&#8592;</span> back</button>
+               </div>
                <div className="expensesFields">
                     <select>
-                         <option value="" key="">Select Catagories</option>
+                         <option value="" key="">Select Type</option>
                          <option value="" key="">Shopping</option>
                          <option value="" key="">Helth</option>
                          <option value="" key="">Enterments</option>

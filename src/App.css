@@ -8,6 +8,15 @@
    --bgactive: rgb(99, 109, 240);
  }
 
+ .backButton{
+  padding: 1px 5px;
+  /* display: inline-block !important;  */
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-weight: 900;
+ }
+
  .maincontainer {
    margin: 0% 5%; 
    overflow: hidden;
