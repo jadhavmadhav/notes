@@ -73,7 +73,7 @@ export default function NewTaskModal({ closeModal }) {
                                              let seconds = createdDate.getSeconds()
                                              let srNo = ind + 1
                                              return (
-                                                  <tr className='Added-task'>
+                                                  <tr className='Added-task' key={ind}>
                                                        <td className='srNo' >{srNo}</td>
                                                        <td className='tasklist-item'>{task}</td>
                                                        <td className='task-time'>{`${dd}/${mm}, ${hours}:${minutes}`}</td>
