@@ -31,12 +31,12 @@
 .optionCharts {}
 
 .expensesAndIncomeReport{
-     margin-top: 5px;
+     margin-top: 15px;
 }
 
 .expensesAndIncomeButtons{
       display: flex;
-      /* background-color: red; */
+      margin-top: 5px;
       padding: 2px 0px;
       justify-content: center;
       align-items: center; 
@@ -61,19 +61,13 @@
 
 }
 
-.ExpensesTypes .bulet{
-     position: relative;
+.ExpensesTypes .bulet{ 
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: red;
 }
-.ExpensesTypes .bulet::before{
-content: '';
-position: absolute;
-width: 10px;
-height: 10px;
-border-radius: 50%;
-background-color: red;
-top: 25%;
-left:-1%;
-}
+ 
 
 
 .tasksContainer{ 

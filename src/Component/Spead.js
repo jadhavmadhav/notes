@@ -7,12 +7,9 @@ import SpeadTable from './tables/SpeadTable';
 
 
 export default function Spead() {
-
-  const [Expanse, setExpense] = useState(true);
-  const [Income, setIncome] = useState(false);
-
-  
-
+const [ExpensesType, setExpensesType] = useState('spe'); 
+ const [catagory, setCatagory] = useState([]);
+ 
   var expanseData = [
     {
       type: 'Shopping',
@@ -21,7 +18,8 @@ export default function Spead() {
       day: 'monday',
       price: '500',
       description: 'test here'
-    },  {
+    },
+    {
       type: 'Shopping',
       catagory: 'grocery',
       date: '12/04/2021',
@@ -29,7 +27,7 @@ export default function Spead() {
       price: '500',
       description: 'test here'
     }
-  
+
   ]
   var IncomeData = [
     {
@@ -39,49 +37,112 @@ export default function Spead() {
       day: 'monday',
       price: '1500',
       description: 'test here'
-    } ,
+    },
   ]
+
+ 
+
+const Catagoreis=[
+  {
+    id:'spe',
+    cName:'Rent'
+  },
+  {
+    id:'spe',
+    cName:'Transportation'
+  },
+  {
+    id:'spe',
+    cName:'Groceries'
+  },
+  {
+    id:'spe',
+    cName:'Home and Utilities'
+  },
+  {
+    id:'spe',
+    cName:'Insurance'
+  },
+  {
+    id:'spe',
+    cName:'Bill'
+  },
+  {
+    id:'spe',
+    cName:'Education'
+  },
+  {
+    id:'spe',
+    cName:'Health and personal care'
+  },
+  {
+    id:'in',
+    cName:'Salary',
+  },{
+    id:'in',
+    cName:'House Property'
+  },{
+    id:'in',
+    cName:'Profit'
+  },{
+    id:'in',
+    cName:'Gain of Business'
+  },{
+    id:'in',
+    cName:'farming'
+  }
+]
   const [tableData, setTableData] = useState(expanseData)
 
-
-  const handleAddExpanses = () => {
-    setExpense(true)
-    setIncome(false)
-    setTableData(expanseData)
-  }
-  const handleAddIncome = () => {
-    setExpense(false)
-    setIncome(true)
-    setTableData(IncomeData)
-  }
-  
+  useEffect(()=>{
+    let temp=[]
+    Catagoreis.map((item)=>{
+      if(item.id===ExpensesType){ 
+          temp.push(item)
+          setCatagory(temp)
+      }
+    })
+  },[ExpensesType])
  
+
+  useEffect(() => {
+    if(ExpensesType==='spe'){
+      setTableData(expanseData) 
+    }
+    else{
+      setTableData(IncomeData) 
+
+    }
+  }, [ExpensesType]);
+
+   
+
+
 
   return (
     <div className='speadContainer'>
-      <div className='speadButtons'>
-        <button onClick={handleAddExpanses}>Add Expanse</button>
-        <button onClick={handleAddIncome}>Add Income</button>
-      </div>
+      
 
       <div>
-        {
-          Expanse && (
-            <div>
+        
+        <div>
               <div className="expensesFields">
-                <select>
-                  <option value="" key="">Select Expanse Type</option>
-                  <option value="" key="">Shopping</option>
-                  <option value="" key="">Helth</option>
-                  <option value="" key="">Enterments</option>
+                <select onChange={(e)=>setExpensesType(e.target.value)}> 
+                  <option value="spe" key="">Spead</option>
+                  <option value="in" key="">Income</option> 
                 </select>
               </div>
               <div className="expensesFields">
                 <select>
-                  <option value="" key="">Select Expanse Catagory</option>
-                  <option value="" key="">Shopping</option>
-                  <option value="" key="">Helth</option>
-                  <option value="" key="">Enterments</option>
+                <option value="">Select {ExpensesType} Catagory</option>
+                {
+                  catagory?.map((item,ind)=>{
+                    const {id,cName}=item
+                    console.log(cName)
+                  return  <option value='' key={ind}>{cName}</option>
+
+                  })
+                } 
                 </select>
               </div>
               <div className="expensesFields">
@@ -95,40 +156,7 @@ export default function Spead() {
                 <button>Add</button>
               </div>
             </div>
-          )
-        }
-        {
-          Income && (
-            <div>
-              <div className="expensesFields">
-                <select>
-                  <option value="" key="">Select Income Type</option>
-                  <option value="" key="">Shopping</option>
-                  <option value="" key="">Helth</option>
-                  <option value="" key="">Enterments</option>
-                </select>
-              </div>
-              <div className="expensesFields">
-                <select>
-                  <option value="" key="">Select Income Catagory</option>
-                  <option value="" key="">Shopping</option>
-                  <option value="" key="">Helth</option>
-                  <option value="" key="">Enterments</option>
-                </select>
-              </div>
-              <div className="expensesFields">
-                <input type="text" placeholder="Enter Amounts" />
-              </div>
-              <div className="expensesFields">
-                <textarea cols="30" rows="1"></textarea>
-              </div>
 
-              <div className="expensesFields">
-                <button>Add</button>
-              </div>
-            </div>
-          )
-        }
       </div>
 
       {/*----------show data here-------------------*/}

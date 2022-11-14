@@ -99,7 +99,7 @@
 }
 
  
-tr td {
+.Added-task tr td {
      border: none;
      padding: 2px 5px;
 }

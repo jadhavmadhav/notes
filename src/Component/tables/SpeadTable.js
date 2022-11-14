@@ -15,9 +15,9 @@ export default function SpeadTable({ tableData}) {
                          </tr>
                     </thead>
                     {
-                         tableData?.map((data) => {
+                         tableData?.map((data,ind) => {
 
-                              return (<tr> 
+                              return (<tr key={ind}> 
                                    <td>{data.type}</td>
                                    <td>{data.catagory}</td>
                                    <td>{data.date}</td>

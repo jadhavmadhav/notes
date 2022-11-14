@@ -1,23 +1,13 @@
 import React, { useState } from "react";
 import "./Home.css";
-import { Chart } from "react-google-charts";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Pie } from "react-chartjs-2";
+import { Line, Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  // Tooltip,
-  // Legend,
-} from "recharts";
-import SelectionModal from "./addSelection/SelectionModal";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import LineChart from "./LineChart";
 
 export const data = [
   ["type", "amount"],
@@ -77,6 +67,7 @@ export default function Home() {
   const [pieChart, setpieChart] = useState(false);
   const [Expenses, setExpenses] = useState(true);
 
+  const navigate = useNavigate()
   const Active = {
     backgroundColor: "lightblue",
   };
@@ -96,17 +87,65 @@ export default function Home() {
     },
   };
 
-  const TaskData = [
-    { id: 1, title: "Task1", date: "19/10/2022" },
-    { id: 2, title: "Task2", date: "19/10/2022" },
-    { id: 3, title: "Task3", date: "21/10/2022" },
-    { id: 4, title: "Task1", date: "19/10/2022" },
-    { id: 5, title: "Task2", date: "19/10/2022" },
-    { id: 6, title: "Task3", date: "21/10/2022" },
-    { id: 7, title: "Task1", date: "19/10/2022" },
-    { id: 8, title: "Task2", date: "19/10/2022" },
-    { id: 9, title: "Task3", date: "21/10/2022" },
-  ];
+  const taskData = [
+    {
+      id: 1,
+      taskName: 'My Task 1',
+      taskDate: '12/11/22022',
+      tasks: [
+        {
+          checked: true,
+          item: 'task1'
+        },
+        {
+          checked: false,
+          item: 'task2'
+        },
+        {
+          checked: true,
+          item: 'task3'
+        }
+      ]
+    },
+    {
+      id: 2,
+      taskName: 'My Task 2',
+      taskDate: '12/11/22022',
+      tasks: [
+        {
+          checked: true,
+          item: 'task1'
+        },
+        {
+          checked: false,
+          item: 'task2'
+        },
+        {
+          checked: true,
+          item: 'task3'
+        }
+      ]
+    },
+    {
+      id: 3,
+      taskName: 'My Task 3',
+      taskDate: '12/11/22022',
+      tasks: [
+        {
+          checked: true,
+          item: 'task1'
+        },
+        {
+          checked: false,
+          item: 'task2'
+        },
+        {
+          checked: true,
+          item: 'task3'
+        }
+      ]
+    }
+  ]
 
   const NotesData = [
     { id: 1, title: "Notes1", date: "19/10/2022" },
@@ -155,6 +194,26 @@ export default function Home() {
     ],
   };
 
+  const ExpensesData = [
+    {
+      id: 1,
+      catagory: 'Shopping',
+      expense: 250,
+      color: 'green'
+    },
+    {
+      id: 1,
+      catagory: 'Shopping',
+      expense: 2600,
+      color: 'red'
+    },
+    {
+      id: 1,
+      catagory: 'Shopping',
+      expense: 1450,
+      color: 'pink'
+    }
+  ]
 
   return (
     <div>
@@ -188,38 +247,9 @@ export default function Home() {
             </div>
           </div>
 
-          {pieChart ? (
-            // <Chart
-            //   chartType="PieChart"
-            //   data={data}
-            //   options={options}
-            //   width={"100%"}
-            //   height={"400px"}
-            // />
-            <Pie data={data} />
-          ) : (
-            <BarChart
-              width={400}
-              height={300}
-              data={barData}
-              margin={{
-                top: 20,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="Income" stackId="a" fill="#8884d8" />
-              {/* <Bar dataKey="amt" stackId="a" fill="#82ca9d" /> */}
-              <Bar dataKey="Expenses" fill="#ffc658" />
-            </BarChart>
-          )}
+          {pieChart && <Pie data={data} />}
         </div>
-
+        <LineChart />
         <div className="expensesAndIncomeReport">
           <div className="expensesAndIncomeButtons">
             <button
@@ -236,81 +266,45 @@ export default function Home() {
             </button>
           </div>
 
-          <div className="mt-4">
+          <div className="mt-4 mb-4">
             <div className="ExpensesTypes">
-              <div
-                className="d-flex"
-                style={{ justifyContent: "space-between", padding: "0px 10px" }}
-              >
-                <div>
-                  <span className="bulet"></span>
-                  <span className="mx-3">Shopping:</span>
-                </div>
-                <span>250</span>
-              </div>
-              <div className=" progress">
-                <div
-                  className="progress-bar bg-success"
-                  role="progressbar"
-                  style={{ width: "25%" }}
-                  aria-valuenow="25"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
-              </div>
+              {
+                ExpensesData?.map((ele, ind) => {
+                  const { id, catagory, expense, color } = ele
+                  let totalExpense = 4300
+
+                  let W = expense / 4300 * 100
+                  const progressWidth = Math.round(W)
+
+                  return (
+                    <>
+                      <div className="d-flex" key={id}
+                        style={{ justifyContent: "space-between", padding: "0px 10px" }}
+                      >
+                        <div className="d-flex">
+                          <h6 className="bulet" style={{ backgroundColor: color }}></h6>
+                          <h6 className="mx-2" style={{ marginTop: '-3px' }}>{catagory} :</h6>
+                        </div>
+                        <h6 style={{ color: color }}>{expense}</h6>
+                      </div>
+                      <div className=" progress">
+
+                        <div
+                          className="progress-bar"
+                          role="progressbar"
+                          style={{ width: progressWidth + '%', backgroundColor: color }}
+                          aria-valuenow="25"
+                          aria-valuemin="0"
+                          aria-valuemax="4300"
+                        ></div>
+                      </div>
+                    </>
+                  )
+                })
+              }
+
             </div>
 
-            <div className="ExpensesTypes">
-              <div>
-                <span className="bulet"></span>
-                <span className="mx-3">Housing:</span>
-              </div>
-              <div className=" progress">
-                <div
-                  className="progress-bar bg-info"
-                  role="progressbar"
-                  style={{ width: "50%" }}
-                  aria-valuenow="50"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
-              </div>
-            </div>
-
-            <div className="ExpensesTypes">
-              <div>
-                <span className="bulet"></span>
-                <span className="mx-3">Food:</span>
-              </div>
-              <div className="progress">
-                <div
-                  className="progress-bar bg-warning"
-                  role="progressbar"
-                  style={{ width: "75%" }}
-                  aria-valuenow="75"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
-              </div>
-            </div>
-
-            <div className="ExpensesTypes">
-              <div>
-                <span className="bulet"></span>
-                <span className="mx-3">Subcription:</span>
-              </div>
-
-              <div className="progress">
-                <div
-                  className="progress-bar bg-danger"
-                  role="progressbar"
-                  style={{ width: "100%" }}
-                  aria-valuenow="100"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -322,9 +316,9 @@ export default function Home() {
           autoPlay={true}
           infinite
         >
-          {carouselData.map((img) => {
+          {carouselData.map((img, ind) => {
             return (
-              <div className="carouselItem">
+              <div className="carouselItem" key={ind}>
                 <img src={img} alt="121" />
               </div>
             );
@@ -336,16 +330,20 @@ export default function Home() {
             <h4>Task's</h4>
           </div>
           <div className="row mt-2">
-            {TaskData.map((ele) => {
+            {taskData.map((ele) => {
+              const { id, taskName, taskDate } = ele
               return (
-                <div className="col-4 col-md-3 ">
-                  <div className=" taskFiles">
+                <div className="col-4 col-md-3 " key={id}>
+                  <div className=" taskFiles"
+                    onClick={() => {
+                      navigate('task', { state: id })
+                    }}>
                     <img
                       src={process.env.PUBLIC_URL + "/images/file.png"}
                       alt=""
                     />
-                    <span>{ele.title}</span>
-                    <p className="date">{ele.date}</p>
+                    <span>{taskName}</span>
+                    <p className="date">{taskDate}</p>
                   </div>
                 </div>
               );
@@ -358,9 +356,9 @@ export default function Home() {
             <h4>Note's</h4>
           </div>
           <div className="row mt-2">
-            {NotesData.map((ele) => {
+            {NotesData.map((ele, ind) => {
               return (
-                <div className="col-4 col-md-3 ">
+                <div className="col-4 col-md-3 " key={ind}>
                   <div className=" taskFiles">
                     <img
                       src={process.env.PUBLIC_URL + "/images/notes.png"}
@@ -375,7 +373,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Outlet/>
+      <Outlet />
     </div>
   );
 }
