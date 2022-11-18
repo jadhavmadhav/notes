@@ -7,9 +7,25 @@ import SpeadTable from './tables/SpeadTable';
 
 
 export default function Spead() {
-const [ExpensesType, setExpensesType] = useState('spe'); 
- const [catagory, setCatagory] = useState([]);
- 
+  const [ExpensesType, setExpensesType] = useState('Spead');
+
+  const userSpeadObj = {
+    type: ExpensesType,
+    catagory: '',
+    price: '',
+    description: ''
+  }
+  const userIncomeObj={
+    type:ExpensesType,
+    catagory:'',
+    price:'',
+    description:''
+  }
+  const [userIncomeForm, setuserIncomeForm] = useState(userIncomeObj);
+  const [userSpeadForm, setuserSpeadForm] = useState(userSpeadObj); 
+
+  const [catagory, setCatagory] = useState([]);
+
   var expanseData = [
     {
       type: 'Shopping',
@@ -40,122 +56,159 @@ const [ExpensesType, setExpensesType] = useState('spe');
     },
   ]
 
- 
 
-const Catagoreis=[
-  {
-    id:'spe',
-    cName:'Rent'
-  },
-  {
-    id:'spe',
-    cName:'Transportation'
-  },
-  {
-    id:'spe',
-    cName:'Groceries'
-  },
-  {
-    id:'spe',
-    cName:'Home and Utilities'
-  },
-  {
-    id:'spe',
-    cName:'Insurance'
-  },
-  {
-    id:'spe',
-    cName:'Bill'
-  },
-  {
-    id:'spe',
-    cName:'Education'
-  },
-  {
-    id:'spe',
-    cName:'Health and personal care'
-  },
-  {
-    id:'in',
-    cName:'Salary',
-  },{
-    id:'in',
-    cName:'House Property'
-  },{
-    id:'in',
-    cName:'Profit'
-  },{
-    id:'in',
-    cName:'Gain of Business'
-  },{
-    id:'in',
-    cName:'farming'
-  }
-]
+
+  const Catagoreis = [
+    {
+      id: 'Spead',
+      cName: 'Rent'
+    },
+    {
+      id: 'Spead',
+      cName: 'Transportation'
+    },
+    {
+      id: 'Spead',
+      cName: 'Groceries'
+    },
+    {
+      id: 'Spead',
+      cName: 'Home and Utilities'
+    },
+    {
+      id: 'Spead',
+      cName: 'Insurance'
+    },
+    {
+      id: 'Spead',
+      cName: 'Bill'
+    },
+    {
+      id: 'Spead',
+      cName: 'Education'
+    },
+    {
+      id: 'Spead',
+      cName: 'Health and personal care'
+    },
+    {
+      id: 'Income',
+      cName: 'Salary',
+    }, {
+      id: 'Income',
+      cName: 'House Property'
+    }, {
+      id: 'Income',
+      cName: 'Profit'
+    }, {
+      id: 'Income',
+      cName: 'Gain of Business'
+    }, {
+      id: 'Income',
+      cName: 'farming'
+    }
+  ]
   const [tableData, setTableData] = useState(expanseData)
 
-  useEffect(()=>{
-    let temp=[]
-    Catagoreis.map((item)=>{
-      if(item.id===ExpensesType){ 
-          temp.push(item)
-          setCatagory(temp)
+  useEffect(() => {
+    let temp = []
+    Catagoreis.map((item) => {
+      if (item.id === ExpensesType) {
+        temp.push(item)
+        setCatagory(temp)
       }
     })
-  },[ExpensesType])
- 
+  }, [ExpensesType])
+
 
   useEffect(() => {
-    if(ExpensesType==='spe'){
-      setTableData(expanseData) 
+    if (ExpensesType === 'Spead') {
+      setTableData(expanseData)
     }
-    else{
-      setTableData(IncomeData) 
+    else {
+      setTableData(IncomeData)
 
     }
   }, [ExpensesType]);
 
-   
+  const handleType = (e) => {
+    const value=e.target.value
+    setExpensesType(e.target.value)
+    value === "Income" && setuserIncomeForm({ ...userIncomeForm, type:value }) 
+    value==="Spead"&& setuserSpeadForm({ ...userSpeadForm, type:value})
+  }
+
+  const handleCatagory = (e) => {
+    const value=e.target.value
+    ExpensesType === "Income"&& setuserIncomeForm({ ...userIncomeForm, catagory: value}) 
+    ExpensesType==="Spead"&& setuserSpeadForm({ ...userSpeadForm, catagory:value })
+  }
+
+  const handleAmount = (e) => {
+    const value=e.target.value
+    ExpensesType === "Income" && setuserIncomeForm({ ...userIncomeForm, price:value })
+    ExpensesType==="Spead"&& setuserSpeadForm({ ...userSpeadForm, price:value })
+  }
 
 
+  const handleDescription = (e) => {
+    const value=e.target.value
+
+    ExpensesType === "Income" && setuserIncomeForm({ ...userIncomeForm, description:value })
+    ExpensesType ==="Spead"&& setuserSpeadForm({ ...userSpeadForm, description:value })
+  }
+
+  const [FinalIncome, setFinalIncome] = useState();
+  const [FinalSpead, setFinalSpead] = useState();
+    
+
+  const handleSubmitData=(e)=>{
+    const randomColor = Math.floor(Math.random()*16777215).toString(16);  
+    ExpensesType==="Income"&&setFinalIncome({...userIncomeForm,color:randomColor})
+    ExpensesType==="Spead"&& setFinalSpead({...userSpeadForm,color:randomColor})
+    setuserIncomeForm({type:'',catagory:'',price:'',description:''})
+    setuserSpeadForm({type:'',catagory:'',price:'',description:''})
+  }
 
   return (
     <div className='speadContainer'>
-      
+
 
       <div>
-        
+
         <div>
-              <div className="expensesFields">
-                <select onChange={(e)=>setExpensesType(e.target.value)}> 
-                  <option value="spe" key="">Spead</option>
-                  <option value="in" key="">Income</option> 
-                </select>
-              </div>
-              <div className="expensesFields">
-                <select>
-                <option value="">Select {ExpensesType} Catagory</option>
-                {
-                  catagory?.map((item,ind)=>{
-                    const {id,cName}=item
-                    console.log(cName)
-                  return  <option value='' key={ind}>{cName}</option>
+          <div className="expensesFields">
+            <select
+              onChange={handleType}>
+              <option value="Spead" key="">Spead</option>
+              <option value="Income" key="">Income</option>
+            </select>
+          </div>
+          <div className="expensesFields">
+            <select
+              value={ExpensesType === "Spead" ?userSpeadForm.catagory:userIncomeForm.catagory}
+              onChange={handleCatagory}>
+              <option value="">Select {ExpensesType} Catagory</option>
+              {
+                catagory?.map((item, ind) => {
+                  const { id, cName } = item
+                  return <option value={cName} key={ind}>{cName}</option>
 
-                  })
-                } 
-                </select>
-              </div>
-              <div className="expensesFields">
-                <input type="text" placeholder="Enter Amounts" />
-              </div>
-              <div className="expensesFields">
-                <textarea cols="30" rows="1"></textarea>
-              </div>
+                })
+              }
+            </select>
+          </div>
+          <div className="expensesFields">
+            <input type="text" value={ExpensesType==="Spead"?userSpeadForm.price:userIncomeForm.price} onChange={handleAmount} placeholder="Enter Amounts" />
+          </div>
+          <div className="expensesFields">
+            <textarea cols="30" value={ExpensesType==="Spead"?userSpeadForm.description:userIncomeForm.description} onChange={handleDescription} rows="1"></textarea>
+          </div>
 
-              <div className="expensesFields">
-                <button>Add</button>
-              </div>
-            </div>
+          <div className="expensesFields">
+            <button onClick={handleSubmitData}>Add</button>
+          </div>
+        </div>
 
       </div>
 
