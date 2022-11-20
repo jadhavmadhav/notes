@@ -135,7 +135,7 @@ export default function Spead() {
     const value=e.target.value
     setExpensesType(e.target.value)
     value === "Income" && setuserIncomeForm({ ...userIncomeForm, type:value }) 
-    value==="Spead"&& setuserSpeadForm({ ...userSpeadForm, type:value})
+    value === "Spead"&& setuserSpeadForm({ ...userSpeadForm, type:value})
   }
 
   const handleCatagory = (e) => {
@@ -172,11 +172,8 @@ export default function Spead() {
 
   return (
     <div className='speadContainer'>
-
-
-      <div>
-
-        <div>
+ 
+        <div className='white-box'>
           <div className="expensesFields">
             <select
               onChange={handleType}>
@@ -209,8 +206,7 @@ export default function Spead() {
             <button onClick={handleSubmitData}>Add</button>
           </div>
         </div>
-
-      </div>
+ 
 
       {/*----------show data here-------------------*/}
 

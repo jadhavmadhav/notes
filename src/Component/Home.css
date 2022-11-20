@@ -1,51 +1,62 @@
-.filterButtons button {
-     outline: none;
-     border: 1px solid black;
-     font-size: 16px;
-     padding: 1px 5px;
+  
+.white-box{
+     border-radius: 8px;
+     padding: 10px;
+     margin: 10px 0px;
+     background-color: white;
+     box-shadow: 1px 1px 3px;
 }
 
+.home-conatiner{ 
+     padding:0px 10px;
+}
+
+.filterButtons{
+     /* width: 100px;  */
+     padding: 2px 5px;
+     border: 1px solid black;
+     border-radius: 10px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     background-color: transparent;
+}
 .charts {
      margin-top: 5px;
 }
 
-.chartHeader {
-     display: flex;
-     justify-content: space-between;
+.pie-chart{ 
+     height: 250px !important ;
+     width: 250px !important;  
 }
 
+ 
 
-.chartButtons button {
-     margin: 0px 2px;
-     padding: 2px;
-     outline: none;
-     border: none;
-     background-color: transparent;
+.home-filter {
+     margin-bottom: 10px;
 }
 
-.chartButtons img {
-     width: 25px;
-     height: 25px;
-}
-
-.optionCharts {}
+ 
 
 .expensesAndIncomeReport{
-     margin-top: 15px;
+     margin-top:25px; 
+     padding: 0%;
 }
 
 .expensesAndIncomeButtons{
       display: flex;
-      margin-top: 5px;
+      /* margin-top: 10px; */
       padding: 2px 0px;
       justify-content: center;
-      align-items: center; 
+      align-items: center;   
 }
 .expensesAndIncomeButtons button{
-     width: 80px;
+     width: 90px;
      margin: 0px 5px;
+     padding: 4px 0px;
      outline: none;
      border: none;
+     border-radius: 8px;
      background-color: transparent;
      box-shadow: 1px 1px 2px;
 }
@@ -130,7 +141,7 @@ background: linear-gradient(to right, rgb(0, 17, 255) ,rgb(216, 10, 45));
 }
 .taskFiles img{
      width:50px;
-     height: 50px;
+     /* height: 50px; */
 }
 
 .taskFiles:hover, .taskFiles:active{
