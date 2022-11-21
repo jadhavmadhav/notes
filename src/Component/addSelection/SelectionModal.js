@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AddExpenses from "./AddExpenses";
 import AddIncome from './AddIncome';
@@ -42,28 +42,14 @@ export default function SelectionModal({ handleRemoveSelectionModal }) {
     handleBackButton
   }
 
+  // --------------------------
+
+
 
   return (
     <SelectionContext.Provider value={contextObject}>
       <div className="modalContainer">
-
-
-
-        {
-          addExpenses && <AddExpenses />
-        }
-
-        {addIncome && <AddIncome />}
-
-        {selection && <div className="selectionButtons">
-          <div className="closeSelection">
-            <button className="closeButton" onClick={() => handleRemoveSelectionModal()}>X</button>
-          </div>
-          <button onClick={handleAddIncome}>Add Income</button>
-          <button onClick={handleAddExpenses}>Add Expenses</button>
-          <button>Add Task </button>
-          <button>Add Note</button>
-        </div>}
+        <AddExpenses />
       </div>
     </SelectionContext.Provider>
   );

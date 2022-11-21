@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { AddExpenseForm } from './addSelection/AddExpenses'
+import AddExpenses, { AddExpenseForm } from './addSelection/AddExpenses'
 import { AddIncomeForm } from './addSelection/AddIncome';
 import './Spead.css'
 import SpeadTable from './tables/SpeadTable';
@@ -7,163 +7,70 @@ import SpeadTable from './tables/SpeadTable';
 
 
 export default function Spead() {
-const [ExpensesType, setExpensesType] = useState('spe'); 
- const [catagory, setCatagory] = useState([]);
- 
+
+
+
   var expanseData = [
     {
-      type: 'Shopping',
-      catagory: 'grocery',
-      date: '12/04/2021',
-      day: 'monday',
-      price: '500',
+      type: 'income',
+      catagory: 'salary',
+      date: '01/04/2021',
+      day: 'mon',
+      price: '25000',
       description: 'test here'
     },
     {
-      type: 'Shopping',
-      catagory: 'grocery',
+      type: 'expenses',
+      catagory: 'recharge',
       date: '12/04/2021',
-      day: 'monday',
-      price: '500',
+      day: 'wed',
+      price: '600',
       description: 'test here'
     }
 
   ]
-  var IncomeData = [
-    {
-      type: 'Salary',
-      catagory: 'job',
-      date: '12/04/2021',
-      day: 'monday',
-      price: '1500',
-      description: 'test here'
-    },
-  ]
 
- 
-
-const Catagoreis=[
-  {
-    id:'spe',
-    cName:'Rent'
-  },
-  {
-    id:'spe',
-    cName:'Transportation'
-  },
-  {
-    id:'spe',
-    cName:'Groceries'
-  },
-  {
-    id:'spe',
-    cName:'Home and Utilities'
-  },
-  {
-    id:'spe',
-    cName:'Insurance'
-  },
-  {
-    id:'spe',
-    cName:'Bill'
-  },
-  {
-    id:'spe',
-    cName:'Education'
-  },
-  {
-    id:'spe',
-    cName:'Health and personal care'
-  },
-  {
-    id:'in',
-    cName:'Salary',
-  },{
-    id:'in',
-    cName:'House Property'
-  },{
-    id:'in',
-    cName:'Profit'
-  },{
-    id:'in',
-    cName:'Gain of Business'
-  },{
-    id:'in',
-    cName:'farming'
-  }
-]
   const [tableData, setTableData] = useState(expanseData)
 
-  useEffect(()=>{
-    let temp=[]
-    Catagoreis.map((item)=>{
-      if(item.id===ExpensesType){ 
-          temp.push(item)
-          setCatagory(temp)
-      }
-    })
-  },[ExpensesType])
- 
-
-  useEffect(() => {
-    if(ExpensesType==='spe'){
-      setTableData(expanseData) 
-    }
-    else{
-      setTableData(IncomeData) 
-
-    }
-  }, [ExpensesType]);
-
-   
-
-
-
-  return (
+ return (
     <div className='speadContainer'>
-      
 
       <div>
-        
-        <div>
-              <div className="expensesFields">
-                <select onChange={(e)=>setExpensesType(e.target.value)}> 
-                  <option value="spe" key="">Spead</option>
-                  <option value="in" key="">Income</option> 
-                </select>
-              </div>
-              <div className="expensesFields">
-                <select>
-                <option value="">Select {ExpensesType} Catagory</option>
-                {
-                  catagory?.map((item,ind)=>{
-                    const {id,cName}=item
-                    console.log(cName)
-                  return  <option value='' key={ind}>{cName}</option>
-
-                  })
-                } 
-                </select>
-              </div>
-              <div className="expensesFields">
-                <input type="text" placeholder="Enter Amounts" />
-              </div>
-              <div className="expensesFields">
-                <textarea cols="30" rows="1"></textarea>
-              </div>
-
-              <div className="expensesFields">
-                <button>Add</button>
-              </div>
-            </div>
-
+        <AddExpenses />
       </div>
+
 
       {/*----------show data here-------------------*/}
-
-      <div className='speadTable'>
-        <SpeadTable tableData={tableData} />
+      <div className='list-item'>
+        {
+          tableData?.map((item) => {
+            const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+            console.log("randomColor", randomColor)
+   const red={
+    color:'red'
+   }
+   const green={
+    color:'green'
+   }
+            return ( 
+                <div className='list-data mt-1 mb-1'>
+                  <span style={{ color: `#${randomColor}` }}>{item.catagory}</span>
+                  <span style={item.type==='income'?green:red}>{item.price}</span>
+                  <span>{`${item.date}`}</span>
+                  <p style={{
+                    backgroundColor: `#${randomColor}`, position: 'absolute',
+                    right: '-3%',
+                    width: '3px',
+                    top: '10%',
+                    height: '80%',
+                    borderRadius: '6px',
+                  }} > </p>
+                </div> 
+            )
+          })
+        }
       </div>
+ 
     </div>
   )
 }

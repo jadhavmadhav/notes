@@ -1,24 +1,24 @@
+ 
+.list-item{
+     background-color: white;
+     padding: 5px;
+     margin-top:20px;
+     border-radius: 6px;
+     box-shadow: 1px 1px 1.25px;
 
-.speadContainer{
-     /* background-color: red; */
 }
-
-.speadButtons{
+.list-data{
      display: flex;
-     justify-content: center;
-}
-.speadButtons button{
-     border: none;
-     outline: none;
-     margin-right: 15px;
-     padding: 1px 5px;
-     
+     justify-content: space-between;
+     align-items: center;
+     position: relative;
+     margin-right: 3%;  
+     padding: 1px 0px;
+     font-weight: 500;
+     font-size: 14px;
 }
 
-.speadTable{
-     margin-top: 15px;
-     padding: 5px 0px;
-     background-color: rgba(253, 220, 220, 0.568);
-     overflow: auto;
-     min-height: 200px;
-}
+
+
+ 
+ 

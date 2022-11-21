@@ -104,7 +104,7 @@ export default function Task() {
         <button onClick={handleCreateTask}>Create New Task</button>
       </div>
 
-      <div className='tasks'>
+      <div className='tasks white-box'>
 
         <div className='task-Header'>
           <h5 className='taskName'>{taskName}</h5>
@@ -142,7 +142,7 @@ export default function Task() {
 
           return (
             <div className="col-4 col-md-3 " key={id}>
-              <div className=" taskFiles"
+              <div className="white-box taskFiles"
               onClick={()=>settaskId(ele.id)}>
                 <img
                   src={process.env.PUBLIC_URL + "/images/file.png"}

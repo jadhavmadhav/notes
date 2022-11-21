@@ -9,63 +9,13 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Outlet, useNavigate } from "react-router-dom";
 import LineChart from "./LineChart";
 
-export const data = [
-  ["type", "amount"],
-  ["Income", 220],
-  ["Expanse", 200],
-];
-
-export const options = {
-  height: 250,
-  is3D: true,
-};
-const barData = [
-  {
-    name: "Page A",
-    Expenses: 4000,
-    Income: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    Expenses: 3000,
-    Income: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    Expenses: 2000,
-    Income: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    Expenses: 2780,
-    Income: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    Expenses: 1890,
-    Income: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    Expenses: 2390,
-    Income: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    Expenses: 3490,
-    Income: 4300,
-    amt: 2100,
-  },
-];
+ 
+ 
 export default function Home() {
   const [pieChart, setpieChart] = useState(false);
   const [Expenses, setExpenses] = useState(true);
+
+  const [filter, setFilter] = useState("Month");
 
   const navigate = useNavigate()
   const Active = {
@@ -168,31 +118,26 @@ export default function Home() {
   ChartJS.register(ArcElement, Tooltip, Legend);
 
   const data = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    labels: ["Expenses", "Income"],
     datasets: [
       {
         label: "# of Votes",
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
-        borderWidth: 1,
+        data: [57,43],
+        backgroundColor: ['red','green'],
+        borderColor: ['transparent'],
+        borderWidth: 2,
+
       },
     ],
   };
+
+  const option={
+    scales: { 
+          color: 'red'
+        
+      }
+
+  }
 
   const ExpensesData = [
     {
@@ -216,164 +161,157 @@ export default function Home() {
   ]
 
   return (
-    <div>
-      <div className="row mt-1">
-        <div className="expense-charts">
-          <div className="chartHeader">
-            <div className="filterButtons">
-              <button>Year</button>
-              <button>Month</button>
-              <button>Weekly</button>
-              <button>Day</button>
-            </div>
-
-            <div className="chartButtons">
-              <button
-                style={pieChart ? Active : NotActive}
-                onClick={() => {
-                  setpieChart(true);
-                }}
-              >
-                <img src={process.env.PUBLIC_URL + "/images/pie.png"} alt="" />
-              </button>
-              <button
-                style={pieChart ? NotActive : Active}
-                onClick={() => {
-                  setpieChart(false);
-                }}
-              >
-                <img src={process.env.PUBLIC_URL + "/images/bar.png"} alt="" />
-              </button>
-            </div>
-          </div>
-
-          {pieChart && <Pie data={data} />}
-        </div>
-        <LineChart />
-        <div className="expensesAndIncomeReport">
-          <div className="expensesAndIncomeButtons">
-            <button
-              onClick={() => setExpenses(true)}
-              style={Expenses ? Active : NotActive}
-            >
-              Expenses
-            </button>
-            <button
-              onClick={() => setExpenses(false)}
-              style={Expenses ? NotActive : Active}
-            >
-              Income
-            </button>
-          </div>
-
-          <div className="mt-4 mb-4">
-            <div className="ExpensesTypes">
-              {
-                ExpensesData?.map((ele, ind) => {
-                  const { id, catagory, expense, color } = ele
-                  let totalExpense = 4300
-
-                  let W = expense / 4300 * 100
-                  const progressWidth = Math.round(W)
-
-                  return (
-                    <>
-                      <div className="d-flex" key={id}
-                        style={{ justifyContent: "space-between", padding: "0px 10px" }}
-                      >
-                        <div className="d-flex">
-                          <h6 className="bulet" style={{ backgroundColor: color }}></h6>
-                          <h6 className="mx-2" style={{ marginTop: '-3px' }}>{catagory} :</h6>
-                        </div>
-                        <h6 style={{ color: color }}>{expense}</h6>
-                      </div>
-                      <div className=" progress">
-
-                        <div
-                          className="progress-bar"
-                          role="progressbar"
-                          style={{ width: progressWidth + '%', backgroundColor: color }}
-                          aria-valuenow="25"
-                          aria-valuemin="0"
-                          aria-valuemax="4300"
-                        ></div>
-                      </div>
-                    </>
-                  )
-                })
-              }
-
-            </div>
-
-          </div>
-        </div>
-
-        <Carousel
-          className="taskCarousel"
-          responsive={responsive}
-          minimumTouchDrag={50}
-          arrows={false}
-          autoPlay={true}
-          infinite
+    <div className="row mt-1 home-conatiner">
+      <div className="home-filter">
+        <select
+          className="filterButtons"
+          value={filter && filter}
+          onChange={(e) => setFilter(e.target.value)}
         >
-          {carouselData.map((img, ind) => {
+          <option value="Year" key="">
+            Year
+          </option>
+          <option value="Month" key="">
+            Month
+          </option>
+          <option value="Week" key="">
+            Week
+          </option>
+          <option value="Day" key="">
+            Day
+          </option>
+        </select>
+
+      </div>
+      <div className="white-box " style={{display:'flex', justifyContent:'center'}}>
+        <Pie options={option} data={data} className='pie-chart' />
+      </div>
+      <div className="white-box">
+        <LineChart />
+      </div>
+
+      <div className="expensesAndIncomeReport">
+        <div className="expensesAndIncomeButtons">
+          <button
+            onClick={() => setExpenses(true)}
+            style={Expenses ? Active : NotActive}
+          >
+            Expenses
+          </button>
+          <button
+            onClick={() => setExpenses(false)}
+            style={Expenses ? NotActive : Active}
+          >
+            Income
+          </button>
+        </div>
+
+        <div className=" mb-4">
+          <div className="ExpensesTypes">
+            {
+              ExpensesData?.map((ele, ind) => {
+                const { id, catagory, expense, color } = ele
+                let totalExpense = 4300
+
+                let W = expense / 4300 * 100
+                const progressWidth = Math.round(W)
+
+                return (
+                  < div className="mt-2 white-box">
+                    <div className="d-flex " key={id}
+                      style={{ justifyContent: "space-between" }}
+                    >
+                      <div className="d-flex">
+                        <h6 className="bulet" style={{ backgroundColor: color }}></h6>
+                        <h6 className="mx-2" style={{ marginTop: '-3px' }}>{catagory} :</h6>
+                      </div>
+                      <h6 style={{ color: color }}>{expense}</h6>
+                    </div>
+                    <div className=" progress">
+
+                      <div
+                        className="progress-bar"
+                        role="progressbar"
+                        style={{ width: progressWidth + '%', backgroundColor: color }}
+                        aria-valuenow="25"
+                        aria-valuemin="0"
+                        aria-valuemax="4300"
+                      ></div>
+                    </div>
+                  </div>
+                )
+              })
+            }
+
+          </div>
+
+        </div>
+      </div>
+
+      <Carousel
+        className="taskCarousel"
+        responsive={responsive}
+        minimumTouchDrag={50}
+        arrows={false}
+        autoPlay={true}
+        infinite
+      >
+        {carouselData.map((img, ind) => {
+          return (
+            <div className="carouselItem" key={ind}>
+              <img src={img} alt="121" />
+            </div>
+          );
+        })}
+      </Carousel>
+
+      <div className="tasksContainer">
+        <div className="taskHeader">
+          <h4>Task's</h4>
+        </div>
+        <div className="row mt-2">
+          {taskData.map((ele) => {
+            const { id, taskName, taskDate } = ele
             return (
-              <div className="carouselItem" key={ind}>
-                <img src={img} alt="121" />
+              <div className="col-4 col-md-3 " key={id}>
+                <div className="mb-2 white-box taskFiles"
+                  onClick={() => {
+                    navigate('task', { state: id })
+                  }}>
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/file.png"}
+                    alt=""
+                  />
+                  <span>{taskName}</span>
+                  <p className="date">{taskDate}</p>
+                </div>
               </div>
             );
           })}
-        </Carousel>
-
-        <div className="tasksContainer">
-          <div className="taskHeader">
-            <h4>Task's</h4>
-          </div>
-          <div className="row mt-2">
-            {taskData.map((ele) => {
-              const { id, taskName, taskDate } = ele
-              return (
-                <div className="col-4 col-md-3 " key={id}>
-                  <div className=" taskFiles"
-                    onClick={() => {
-                      navigate('task', { state: id })
-                    }}>
-                    <img
-                      src={process.env.PUBLIC_URL + "/images/file.png"}
-                      alt=""
-                    />
-                    <span>{taskName}</span>
-                    <p className="date">{taskDate}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="notesContainer">
-          <div className="notesHeader">
-            <h4>Note's</h4>
-          </div>
-          <div className="row mt-2">
-            {NotesData.map((ele, ind) => {
-              return (
-                <div className="col-4 col-md-3 " key={ind}>
-                  <div className=" taskFiles">
-                    <img
-                      src={process.env.PUBLIC_URL + "/images/notes.png"}
-                      alt=""
-                    />
-                    <span>{ele.title}</span>
-                    <p className="date">{ele.date}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </div>
-      <Outlet />
+
+      <div className="notesContainer">
+        <div className="notesHeader">
+          <h4>Note's</h4>
+        </div>
+        <div className="row mt-2">
+          {NotesData.map((ele, ind) => {
+            return (
+              <div className="col-4 col-md-3 mb-3 " key={ind}>
+                <div className=" white-box taskFiles">
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/notes.png"}
+                    alt=""
+                  />
+                  <span>{ele.title}</span>
+                  <p className="date">{ele.date}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
