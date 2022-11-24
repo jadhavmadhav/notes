@@ -26,6 +26,7 @@ function App() {
   const handleRemoveSelectionModal=()=>{
     setAddSelectionModal(false)
   }
+  
   const myStyle = {
     PointerEvent: "none",
     opacity: "0.5",
