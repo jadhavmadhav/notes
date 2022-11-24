@@ -139,6 +139,7 @@ export default function Home() {
 
   }
 
+  
   const ExpensesData = [
     {
       id: 1,

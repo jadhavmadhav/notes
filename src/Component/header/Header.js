@@ -16,7 +16,7 @@ export default function Header() {
             <Link className='nav-link'>Home</Link>
             <Link className='nav-link'>Notes</Link>
             <Link className='nav-link'>Tasks</Link>
-            <Link className='nav-link'>Spead</Link>
+            <Link className='nav-link'>Expenses</Link>
             <Link className='nav-link'>Contact Us</Link>
           </div>
         </div>
@@ -38,7 +38,7 @@ export const MobileBottomHeader =({handelSelectionModal})=>{
         <Link to='/' className='bottomNav-link'>
           <img src={process.env.PUBLIC_URL + '/images/home.png'} alt="" />
         </Link>
-        <Link to='spead' className='bottomNav-link'>
+        <Link to='expenses' className='bottomNav-link'>
           <img src={process.env.PUBLIC_URL + '/images/expense.png'} alt="" />
         </Link>
         <Link className='bottomNav-link' onClick={()=>{handelSelectionModal()}}>
