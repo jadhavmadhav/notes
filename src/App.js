@@ -9,7 +9,7 @@ import Home from "./Component/Home";
 import { useSelector } from "react-redux";
 import Header, { MobileBottomHeader } from "./Component/header/Header";
 import SelectionModal from "./Component/addSelection/SelectionModal";
-import Sead from "./Component/Spead";
+import Expenses from "./Component/Expenses";
 import Notes from "./Component/Notes";
 import Task from "./Component/Task";
 import Profile from "./Component/profile/Profile";
@@ -50,7 +50,7 @@ function App() {
               <Route path="/" element={<Login />} />
             )}
             <Route path="/registration" element={<Registration />} /> 
-             <Route path="spead" element={<Sead />} />
+             <Route path="expenses" element={<Expenses /> } />
              <Route path='task' element={<Task />} />
              <Route path='notes' element={<Notes />} />
              <Route path='profile' element={<Profile />} />
