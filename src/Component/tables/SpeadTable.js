@@ -10,12 +10,12 @@ export default function SpeadTable({ tableData}) {
                     <thead>
                          <tr>
                               {
-                                   keys?.map((keys, ind) => <th key={ind}>{keys}</th>)
+                                   keys.map((keys, ind) => <th key={ind}>{keys}</th>)
                               }
                          </tr>
                     </thead>
                     {
-                         tableData?.map((data,ind) => {
+                         tableData.map((data,ind) => {
 
                               return (<tr key={ind}> 
                                    <td>{data.type}</td>

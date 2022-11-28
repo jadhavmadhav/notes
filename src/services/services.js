@@ -7,8 +7,12 @@ export const postExpenses=(Data)=>{
 
 export const getExpenses=()=>{
      return http.get('/expenses')
+} 
+
+export const getExpensesByUserId = (userId)=>{
+    return http.get(`/expenses/${userId}`)
 }
 
 export const getExpensesByUserId_expensesType=(userId,expensesType)=>{
-    return http.get(`/${userId}/${expensesType}`)
+    return http.get(`/expenses/${userId}/${expensesType}`)
 }
