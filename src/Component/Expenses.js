@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom';
 import { getExpenses } from '../services/services';
 import AddExpenses, { AddExpenseForm } from './addSelection/AddExpenses'
 import { AddIncomeForm } from './addSelection/AddIncome';
@@ -10,7 +11,7 @@ import SpeadTable from './tables/SpeadTable';
 export default function Expenses() {
 
 
-
+const navigate =useNavigate()
   
 
   const [Expenses, setExpenses] = useState([]);
@@ -30,6 +31,12 @@ export default function Expenses() {
    getExpenseInfo()
   },[])
 
+
+
+  const handleClick=(expensesId)=>{
+    navigate('/view-detail', {state:{expensesId}})
+  }
+
   return (
     <div className='speadContainer'>
 
@@ -42,7 +49,7 @@ export default function Expenses() {
       <div className='list-item'>
         {
           Expenses.map((item) => { 
-            const{userId,expensesType,catagory,amount,description,date,day,time,_id}=item
+            const{userId,expensesType,catagory,amount,description,expensesId,date,day,time,_id}=item
             const randomColor = Math.floor(Math.random() * 16777215).toString(16); 
             const red = {
               color: 'red'
@@ -51,7 +58,7 @@ export default function Expenses() {
               color: 'green'
             }
             return (
-              <div className='list-data mt-1 mb-1' key={_id}>
+              <div className='list-data mt-1 mb-1' key={expensesId} onClick={()=>handleClick(expensesId)}>
                 <span className='catagory-name' style={{ color: `#${randomColor}` }}>{catagory}</span>
                 <span className='catagory-amount' style={expensesType === 'Income' ? green : red}>{amount}</span>
                 <span className='catagory-date'>{`${date}`}</span>
@@ -67,8 +74,8 @@ export default function Expenses() {
             )
           })
         }
+        
       </div>
-
     </div>
   )
 }

@@ -9,6 +9,9 @@ export const getExpenses=()=>{
      return http.get('/expenses')
 } 
 
+export const getExpensesById=(Id)=>{
+    return http.get(`/expenses/${Id}`)
+}
 export const getExpensesByUserId = (userId)=>{
     return http.get(`/expenses/${userId}`)
 }

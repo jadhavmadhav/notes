@@ -13,6 +13,7 @@ import Expenses from "./Component/Expenses";
 import Notes from "./Component/Notes";
 import Task from "./Component/Task";
 import Profile from "./Component/profile/Profile";
+import ViewDetails from "./Component/ViewDetails";
  
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
              <Route path='task' element={<Task />} />
              <Route path='notes' element={<Notes />} />
              <Route path='profile' element={<Profile />} />
+             <Route path="view-detail" element={<ViewDetails />} />
 
           </Routes>
         </div>
