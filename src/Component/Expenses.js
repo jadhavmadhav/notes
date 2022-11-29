@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom';
 import { getExpenses } from '../services/services';
 import AddExpenses, { AddExpenseForm } from './addSelection/AddExpenses'
 import { AddIncomeForm } from './addSelection/AddIncome';
@@ -10,26 +11,8 @@ import SpeadTable from './tables/SpeadTable';
 export default function Expenses() {
 
 
-
-  var expanseData = [
-    {
-      type: 'income',
-      catagory: 'salary',
-      date: '01/04/2021',
-      day: 'mon',
-      price: '25000',
-      description: 'test here'
-    },
-    {
-      type: 'expenses',
-      catagory: 'recharge',
-      date: '12/04/2021',
-      day: 'wed',
-      price: '600',
-      description: 'test here'
-    }
-
-  ]
+const navigate =useNavigate()
+  
 
   const [Expenses, setExpenses] = useState([]);
 
@@ -37,7 +20,8 @@ export default function Expenses() {
     try {
       const req = await getExpenses()
       const res = await req.data 
-      setExpenses(res)
+      const result = res.sort((a,b)=>Number(a.date)-Number(b.date)).sort((a,b)=>a.time > b.time?-1:1)
+      setExpenses(result)
     } catch (error) {
       console.log(error)
     }
@@ -46,6 +30,12 @@ export default function Expenses() {
   useEffect(()=>{
    getExpenseInfo()
   },[])
+
+
+
+  const handleClick=(expensesId)=>{
+    navigate('/view-detail', {state:{expensesId}})
+  }
 
   return (
     <div className='speadContainer'>
@@ -58,8 +48,8 @@ export default function Expenses() {
       {/*----------show data here-------------------*/}
       <div className='list-item'>
         {
-          Expenses?.map((item) => {
-            const{userId,expensesType,catagory,amount,description,date,day,time,_id}=item
+          Expenses.map((item) => { 
+            const{userId,expensesType,catagory,amount,description,expensesId,date,day,time,_id}=item
             const randomColor = Math.floor(Math.random() * 16777215).toString(16); 
             const red = {
               color: 'red'
@@ -68,10 +58,10 @@ export default function Expenses() {
               color: 'green'
             }
             return (
-              <div className='list-data mt-1 mb-1' key={_id}>
-                <span style={{ color: `#${randomColor}` }}>{catagory}</span>
-                <span style={expensesType === 'Income' ? green : red}>{amount}</span>
-                <span>{`${date}`}</span>
+              <div className='list-data mt-1 mb-1' key={expensesId} onClick={()=>handleClick(expensesId)}>
+                <span className='catagory-name' style={{ color: `#${randomColor}` }}>{catagory}</span>
+                <span className='catagory-amount' style={expensesType === 'Income' ? green : red}>{amount}</span>
+                <span className='catagory-date'>{`${date}`}</span>
                 <p style={{
                   backgroundColor: `#${randomColor}`, position: 'absolute',
                   right: '-3%',
@@ -84,8 +74,8 @@ export default function Expenses() {
             )
           })
         }
+        
       </div>
-
     </div>
   )
 }

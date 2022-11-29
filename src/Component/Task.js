@@ -112,7 +112,7 @@ export default function Task() {
         </div>
         <div className='task-items'>
           {
-            tasks?.map((task,ind) => {
+            tasks.map((task,ind) => {
               const { item, checked } = task
               return (
                 <div className='task-item' key={ind}>

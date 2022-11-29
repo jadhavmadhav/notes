@@ -61,7 +61,7 @@ export default function NewTaskModal({ closeModal }) {
                               <table >
 
                                    {
-                                        NewTasks?.map((item, ind) => {
+                                        NewTasks.map((item, ind) => {
                                              const { task, createdDate } = item
                                              let today = createdDate;
                                              let dd = String(today.getDate()).padStart(2, '0');
