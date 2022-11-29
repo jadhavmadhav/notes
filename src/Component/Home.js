@@ -275,7 +275,7 @@ export default function Home() {
             const { id, taskName, taskDate } = ele
             return (
               <div className="col-4 col-md-3 " key={id}>
-                <div className="mb-2 white-box taskFiles"
+                <div className="mb-2 file-box taskFiles"
                   onClick={() => {
                     navigate('task', { state: id })
                   }}>
@@ -283,8 +283,7 @@ export default function Home() {
                     src={process.env.PUBLIC_URL + "/images/file.png"}
                     alt=""
                   />
-                  <span>{taskName}</span>
-                  <p className="date">{taskDate}</p>
+                  <span>{taskName}</span> 
                 </div>
               </div>
             );
@@ -300,13 +299,12 @@ export default function Home() {
           {NotesData.map((ele, ind) => {
             return (
               <div className="col-4 col-md-3 mb-3 " key={ind}>
-                <div className=" white-box taskFiles">
+                <div className=" file-box taskFiles">
                   <img
                     src={process.env.PUBLIC_URL + "/images/notes.png"}
                     alt=""
                   />
                   <span>{ele.title}</span>
-                  <p className="date">{ele.date}</p>
                 </div>
               </div>
             );
