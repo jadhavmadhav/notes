@@ -1,7 +1,7 @@
 .home-container {
     position: relative;
    background-color: rgba(215, 215, 215, 0.073);
-
+ padding: 0px 10px;
 }
 
 .current-balance-section {

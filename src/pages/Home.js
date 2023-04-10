@@ -1,15 +1,15 @@
 import React from 'react';
 import '../styles/Home.css'
-import HomeBarChart from '../componaten/charts/BarChart';
-import HomePieChart from '../componaten/charts/PieChart';
+import HomeBarChart from '../component/charts/BarChart';
+import HomePieChart from '../component/charts/PieChart';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
 
   const Navigate = useNavigate()
 
- const handleAddButton=()=>{
-  Navigate('/add-expense')
+  const handleAddButton = () => {
+    Navigate('/add-expense')
   }
   return (
     <div>
@@ -30,10 +30,10 @@ const Home = () => {
           </div>
           <div className='d-flex flex-column align-items-center'>
             <span>2023/04/04</span>
-            <span className='expense mt-1'>16000</span>
+            <span className='expense mt-1' onClick={() => Navigate('/expense-anaylsis')}>16000</span>
           </div>
           <div className='d-flex flex-column align-items-end'>
-            <span className='active'>Activity</span>
+            <span className='active' onClick={() => Navigate('/activitys')}>Activity</span>
             <span className='income mt-1'>4000</span>
           </div>
         </div>
