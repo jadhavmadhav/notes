@@ -1,0 +1,48 @@
+.home-container {
+    position: relative;
+   background-color: rgba(215, 215, 215, 0.073);
+ padding: 0px 10px;
+}
+
+.current-balance-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-data-sections {
+    /* display: flex; */
+    /* justify-content: space-between; */
+    margin-top: 5px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.home-activity-section {
+    display: flex;
+    align-items: end;
+}
+
+.add-button {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    background-color: rgba(57, 130, 247, 0.978);
+    bottom: 10%;
+    right: 10%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor:pointer;
+}
+
+.add-button:active{
+    scale: 1.02;
+}
+
+.add-button h1 {
+    font-size: 35px;
+    color: white;
+    font-weight: 300;
+}

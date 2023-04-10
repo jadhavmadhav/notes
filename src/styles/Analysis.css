@@ -1,0 +1,68 @@
+.analysis-container {
+    /* padding: 0px 10px; */
+}
+
+.a-filter-bottons {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(40px, 100px));
+    justify-content: center;
+    height: 40px;
+}
+
+.afb-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+    font-size: 16px;
+}
+
+.a-filter-section {
+    height: 80px;
+    background-color: rgba(128, 128, 128, 0.236);
+    display: flex;
+    align-items: center;
+}
+
+.a-filter-section span {
+    width: 20%;
+    font-size: 35px;
+    font-weight: 800;
+    text-align: center;
+    cursor: pointer;
+    color: green;
+}
+
+.a-filter-section span:active{
+    scale: 1.1;
+}
+
+.afs-dateNtype {
+    width: 60%;
+    text-align: center;
+}
+
+.cld-image{
+    width: 25px;
+}
+
+.a-radio-buttons{
+    display: flex;
+    justify-content: center;
+}
+
+.ar-btn{
+    font-size: 18px;
+
+}
+.ar-btn:nth-child(2){
+    margin-left: 15px;
+}
+.ar-btn input:active{
+    color:green;
+}
+
+.ar-btn label{
+    margin-left: 5px;
+}

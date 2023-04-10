@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 
 import Carousel from "react-multi-carousel";
@@ -8,13 +8,20 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 import { Outlet, useNavigate } from "react-router-dom";
 import LineChart from "./LineChart";
+import { getExpensesByUserId_expensesType, getExpenses, getExpensesByUserId } from "../services/services";
+import PieChart from "./PieChart";
 
- 
- 
+
+
+
 export default function Home() {
   const [pieChart, setpieChart] = useState(false);
   const [Expenses, setExpenses] = useState(true);
 
+  const [expensesPrice, setexpensesPrice] = useState([]);
+  const [incomeData, setIncomeData] = useState([]);
+  const [expenseData, setExpenseData] = useState([]);
+ 
   const [filter, setFilter] = useState("Month");
 
   const navigate = useNavigate()
@@ -117,13 +124,60 @@ export default function Home() {
 
   ChartJS.register(ArcElement, Tooltip, Legend);
 
+  const getExpensesByUserIdData = async () => {
+    try {
+      const request = await getExpensesByUserId("EUM1")
+      const response = await request.data
+      let expensesTotal = 0
+      let incomeTotal = 0
+      let exTemp = [];
+      let inTemp = [];
+      response.map((item) => {
+
+        if (item.expensesType === "Expenses") {
+          expensesTotal += item.amount;
+          exTemp.push(item);
+          setExpenseData(exTemp);
+        }
+        else {
+          incomeTotal += item.amount;
+          inTemp.push(item);
+          setIncomeData(inTemp)
+        }
+      })
+
+      const total = expensesTotal + incomeTotal
+      let findExpenses = Math.round(expensesTotal / total * 100)
+      const findIncome = Math.round(incomeTotal / total * 100)
+      setexpensesPrice([findExpenses, findIncome])
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getExpenseInfo = async () => {
+    try {
+      const request = await getExpensesByUserId_expensesType("EUM1")
+      const response = await request.data
+      setexpensesPrice()
+    } catch (err) {
+      // console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    getExpenseInfo();
+    getExpensesByUserIdData();
+  }, []);
+
   const data = {
     labels: ["Expenses", "Income"],
     datasets: [
       {
         label: "# of Votes",
-        data: [57,43],
-        backgroundColor: ['red','green'],
+        data: expensesPrice,
+        backgroundColor: ['red', 'green'],
         borderColor: ['transparent'],
         borderWidth: 2,
 
@@ -131,15 +185,15 @@ export default function Home() {
     ],
   };
 
-  const option={
-    scales: { 
-          color: 'red'
-        
-      }
+  const option = {
+    scales: {
+      color: 'red'
+
+    }
 
   }
 
-  
+
   const ExpensesData = [
     {
       id: 1,
@@ -184,12 +238,11 @@ export default function Home() {
         </select>
 
       </div>
-      <div className="white-box " style={{display:'flex', justifyContent:'center'}}>
+      <div className="white-box " style={{ display: 'flex', justifyContent: 'center' }}>
         <Pie options={option} data={data} className='pie-chart' />
       </div>
-      <div className="white-box">
-        <LineChart />
-      </div>
+
+
 
       <div className="expensesAndIncomeReport">
         <div className="expensesAndIncomeButtons">
@@ -206,11 +259,17 @@ export default function Home() {
             Income
           </button>
         </div>
+        <div className="white-box" style={{padding:'0px' , overflow:'hidden'}}>
+          <PieChart IncomeData={incomeData} ExpensesData={expenseData}/>
+        </div>
+        <div className="white-box">
+          <LineChart IncomeData={incomeData} ExpensesData={expenseData} />
+        </div>
 
         <div className=" mb-4">
           <div className="ExpensesTypes">
             {
-              ExpensesData?.map((ele, ind) => {
+              ExpensesData.map((ele, ind) => {
                 const { id, catagory, expense, color } = ele
                 let totalExpense = 4300
 
@@ -275,7 +334,7 @@ export default function Home() {
             const { id, taskName, taskDate } = ele
             return (
               <div className="col-4 col-md-3 " key={id}>
-                <div className="mb-2 white-box taskFiles"
+                <div className="mb-2 file-box taskFiles"
                   onClick={() => {
                     navigate('task', { state: id })
                   }}>
@@ -283,8 +342,7 @@ export default function Home() {
                     src={process.env.PUBLIC_URL + "/images/file.png"}
                     alt=""
                   />
-                  <span>{taskName}</span>
-                  <p className="date">{taskDate}</p>
+                  <span>{taskName}</span> 
                 </div>
               </div>
             );
@@ -300,13 +358,12 @@ export default function Home() {
           {NotesData.map((ele, ind) => {
             return (
               <div className="col-4 col-md-3 mb-3 " key={ind}>
-                <div className=" white-box taskFiles">
+                <div className=" file-box taskFiles">
                   <img
                     src={process.env.PUBLIC_URL + "/images/notes.png"}
                     alt=""
                   />
                   <span>{ele.title}</span>
-                  <p className="date">{ele.date}</p>
                 </div>
               </div>
             );
