@@ -8,9 +8,12 @@ const Home = () => {
 
   const Navigate = useNavigate()
 
+  
+
   const handleAddButton = () => {
     Navigate('/add-expense')
   }
+  console.log("Home page")
   return (
     <div>
       <div className='home-container'>

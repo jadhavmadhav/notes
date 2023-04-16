@@ -32,6 +32,7 @@ const AddExpenses = () => {
 
     const Navigate = useNavigate()
 
+    console.log("Add expenses page")
 
     const handleCapture = (target) => {
         if (target.files) {
