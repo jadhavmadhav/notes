@@ -1,0 +1,41 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+
+}
+
+.container {
+    position: absolute;
+    background-color: rgba(7, 7, 7, 0.355);
+    z-index: 2;
+    margin-left: -3%;
+    margin-top: -2%;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemsSection {
+    width: 60%;
+    max-height: 70%;
+    height: 50%;
+    background-color: white;
+
+}
+
+.item {
+    border-bottom: 1px solid rgb(168, 167, 167);
+    height: 35px;
+}
+
+.item h6 {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-transform: capitalize;
+}

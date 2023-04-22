@@ -11,7 +11,7 @@ import Analysis from "./pages/Analysis";
 
 
 function App() {
-
+console.log("App")
   return (
     <BrowserRouter>
       <div className="app-container">

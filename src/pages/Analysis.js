@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,memo } from 'react';
 import '../styles/Analysis.css'
 import calendarImg from '../assets/calendar.png'
 import moment from 'moment';
@@ -145,4 +145,4 @@ const Analysis = () => {
     );
 }
 
-export default Analysis;
+export default memo(Analysis);
