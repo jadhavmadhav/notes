@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import moment from 'moment'
+
 import {
     BarChart,
     Bar,
@@ -9,6 +11,7 @@ import {
     Legend,
     LabelList
 } from "recharts";
+import { getBarChart } from '../../services/home';
 
 const data = [
     {
@@ -72,26 +75,48 @@ const renderCustomizedLabel = (props) => {
 };
 
 const HomeBarChart = () => {
+    const [income, setIncome] = React.useState([])
+    const [expense, setExpense] = React.useState([])
+
+    console.log(income)
+
+    const GetBarData = async () => {
+        const request = await getBarChart()
+        const response = await request.data
+
+        if (response.status === 200) {
+            setIncome(response.result?.income)
+            setExpense(response.result?.expense)
+        }
+    }
+
+    useEffect(() => {
+        GetBarData()
+    }, [])
+
+
+
     return (
         <BarChart
             width={350}
             height={300}
-            data={data}
+            data={income}
             margin={{
                 top: 20,
                 // right: 30,
                 left: 0,
-                bottom: 5, 
+                bottom: 5,
 
             }}
         >
+
             <CartesianGrid strokeDasharray="0 3" />
-            <XAxis dataKey="name"   />
-            <YAxis  hide/>
+            <XAxis dataKey={moment(data.createdDate).format("DD/MM")} />
+            <YAxis hide />
             <Tooltip />
             <Legend />
-            <Bar dataKey="uv" fill="#8878d8" minPointSize={5} barSize={25}>
-                <LabelList dataKey="uv" content={renderCustomizedLabel}  />
+            <Bar dataKey="total" fill="red" minPointSize={5} barSize={25}>
+                <LabelList dataKey="total" content={renderCustomizedLabel} />
             </Bar>
         </BarChart>
     );

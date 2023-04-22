@@ -1,5 +1,6 @@
 .addExp-container {
     padding:0px 10px ;
+    position: relative;
 }
 
 .ae-topSection {
@@ -74,6 +75,7 @@
     border-radius: 50%;
     /* background-color: aqua; */
     overflow: hidden;
+    cursor: pointer;
 }
 
 .ae-f-icon-circle:active {
@@ -88,6 +90,7 @@
 .ae-filed-selection {
     font-size: 16px;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .ae-btn-section {

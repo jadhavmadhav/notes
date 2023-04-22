@@ -1,0 +1,18 @@
+
+
+.filter-listing-card{
+    margin-top: 10px;
+}
+
+.flc-items{
+    padding: 0px 5px;
+}
+
+.flc-items-top-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+ 

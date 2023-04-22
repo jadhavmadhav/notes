@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Listing from '../component/listing/Listing';
 
 const Activitys = () => {
+  console.log("Activitys page")
+
     return (
         <div>
             <Listing />
@@ -9,4 +11,4 @@ const Activitys = () => {
     );
 }
 
-export default Activitys;
+export default memo(Activitys);

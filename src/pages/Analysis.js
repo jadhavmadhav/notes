@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,memo } from 'react';
 import '../styles/Analysis.css'
 import calendarImg from '../assets/calendar.png'
 import moment from 'moment';
+import FilterListing from '../component/listing/FilterListing';
 
 
 
@@ -16,6 +17,7 @@ const Analysis = () => {
     const [month, setMonth] = useState(Number(moment(currDate).format("MM")))
     const [year, setYear] = useState(Number(moment(currDate).format("YYYY")))
 
+    console.log("Analysis page")
 
 
     const currDate = new Date()
@@ -25,16 +27,39 @@ const Analysis = () => {
     // const Year = moment(currDate).format("YYYY")
 
     var cdate = new Date();
-    cdate.setMonth(month-1)
+    cdate.setMonth(month - 1)
     cdate.setYear(year)
-    var firstDay = new Date(cdate.getFullYear(), cdate.getMonth(), 1);
+    var firstDay = moment(new Date(cdate.getFullYear(), cdate.getMonth(), 1)).format('DD');
     var lastDay = moment(new Date(cdate.getFullYear(), cdate.getMonth() + 1, 0)).format('DD');
     console.log(firstDay, lastDay)
 
     const handlMoveDate = () => {
-      if(date<=lastDay-1){
-        setDate(date+1)
-      } 
+        if (date <= lastDay - 1 && month <= 12) {
+            setDate(date + 1)
+        } else if (date >= lastDay - 1 && month <= 12) {
+            setMonth(month + 1)
+            setDate(1)
+        } else {
+            setYear(year + 1)
+            setMonth(1)
+            setDate(1)
+        }
+    }
+
+    const handlPreviouseDate = () => {
+        if (date > 1 && month > 1) {
+            setDate(date - 1)
+        } else if (date <= 1) {
+            setDate(lastDay)
+            let date = new Date() 
+            setMonth(month - 1)
+
+        } else {
+            setYear(year - 1)
+            setMonth(13)
+            setDate(32)
+        }
+
     }
 
     const handleDailyBtn = () => {
@@ -96,7 +121,7 @@ const Analysis = () => {
             </div>
 
             <div className='a-filter-section'>
-                <span>&larr;</span>
+                <span onClick={handlPreviouseDate}>&larr;</span>
                 <div className='afs-dateNtype'>
                     <h5> Fri, {year}-{month}-{date} <img className='cld-image' src={calendarImg} /></h5>
                     <h5 style={{ color: 'rgb(236, 4, 4)' }}>Expense : 1250.00</h5>
@@ -114,8 +139,10 @@ const Analysis = () => {
                     <label htmlFor='ctg'>Catagory View</label>
                 </div>
             </div>
+
+            <FilterListing />
         </div>
     );
 }
 
-export default Analysis;
+export default memo(Analysis);
