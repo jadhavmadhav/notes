@@ -8,13 +8,17 @@ import AddExpenses from "./pages/AddExpenses";
 import PaymentStatus from "./pages/PaymentStatus";
 import Activitys from "./pages/Activitys";
 import Analysis from "./pages/Analysis";
+import Header from "./component/Header";
 
 
 function App() {
-console.log("App")
+  console.log("App")
   return (
     <BrowserRouter>
       <div className="app-container">
+        <div className="position-sticky top-0 w-100" style={{zIndex:10}}>
+          <Header />
+        </div>
         <Routes>
 
           {/* <Home /> */}
@@ -23,7 +27,7 @@ console.log("App")
           <Route path="/add-expense/status" element={<PaymentStatus />} />
           <Route path="/activitys" element={<Activitys />} />
           <Route path="/expense-anaylsis" element={<Analysis />} />
-           
+
         </Routes>
 
       </div>

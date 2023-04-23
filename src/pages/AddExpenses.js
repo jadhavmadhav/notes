@@ -10,7 +10,7 @@ import payeeImg from '../assets/payee.png'
 import ammountImg from '../assets/calculator.png'
 import cameraImg from '../assets/camera.png'
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import ExpenseModel from '../Component/expenseModel';
+import ExpenseModel from '../component/expenseModel';
 import { getCatagories, getPaymentMethods, getPaymentStatus, getSubCatagories, postExpenses } from '../services/home';
 
 
