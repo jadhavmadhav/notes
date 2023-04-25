@@ -34,7 +34,7 @@ const Home = () => {
     }
   ]
 
-  
+
 
 
 
@@ -93,7 +93,18 @@ const Home = () => {
             </span>
           </div>
           <div className='d-flex flex-column align-items-end'>
-            <span className='active' onClick={() => Navigate('/activitys')}>Activity</span>
+            <span className='active'
+              onClick={
+                () =>
+                  Navigate('/activitys',
+                    {
+                      state: {
+                        sdate: today?.todayDate,
+                        ldate: today?.todayDate
+                      }
+                    })
+              }>
+              Activity</span>
             <span className='income mt-1'>
               {today?.balance.toFixed(2)}
             </span>
@@ -109,7 +120,18 @@ const Home = () => {
             <span className='expense mt-1'>{weekData?.expense?.total.toFixed(2)}</span>
           </div>
           <div className='d-flex flex-column align-items-end'>
-            <span className='active'>Activity</span>
+            <span className='active'
+              onClick={
+                () =>
+                  Navigate('/activitys',
+                    {
+                      state: {
+                        sdate: weekData?.startDateOfWeek,
+                        ldate: weekData?.lastDateOfWeek
+                      }
+                    })
+              }
+            >Activity</span>
             <span className='income mt-1'>{weekData?.balance.toFixed(2)}</span>
           </div>
         </div>
@@ -123,7 +145,18 @@ const Home = () => {
             <span className='expense mt-1'>{month?.expense?.total.toFixed(2)}</span>
           </div>
           <div className='d-flex flex-column align-items-end'>
-            <span className='active'>Activity</span>
+            <span className='active'
+              onClick={
+                () =>
+                  Navigate('/activitys',
+                    {
+                      state: {
+                        sdate: month?.firstDateOfMonth,
+                        ldate: month?.lastDateOfMonth
+                      }
+                    })
+              }
+            >Activity</span>
             <span className='income mt-1'>{month?.balance.toFixed(2)}</span>
           </div>
         </div>
@@ -137,7 +170,18 @@ const Home = () => {
             <span className='expense mt-1'>{year?.expense?.total.toFixed(2)}</span>
           </div>
           <div className='d-flex flex-column align-items-end'>
-            <span className='active'>Activity</span>
+            <span className='active'
+              onClick={
+                () =>
+                  Navigate('/activitys',
+                    {
+                      state: {
+                        sdate: year?.firstDateOfYear,
+                        ldate: year?.lastDateOfYear
+                      }
+                    })
+              }
+            >Activity</span>
             <span className='income mt-1'>{year?.balance.toFixed(2)}</span>
           </div>
         </div>
@@ -152,7 +196,17 @@ const Home = () => {
             <span className='expense mt-1'>{allTime?.expense?.total.toFixed(2)}</span>
           </div>
           <div className='d-flex flex-column align-items-end'>
-            <span className='active'>Activity</span>
+            <span className='active'
+              onClick={
+                () =>
+                  Navigate('/activitys',
+                    {
+                      state: {
+                        all: true
+                      }
+                    })
+              }
+            >Activity</span>
             <span className='income mt-1'>{allTime?.balance.toFixed(2)}</span>
           </div>
         </div>

@@ -9,9 +9,9 @@ import catagoryImg from '../assets/menu.png'
 import payeeImg from '../assets/payee.png'
 import ammountImg from '../assets/calculator.png'
 import cameraImg from '../assets/camera.png'
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ExpenseModel from '../component/expenseModel';
-import { getCatagories, getPaymentMethods, getPaymentStatus, getSubCatagories, postExpenses } from '../services/home';
+import { getCatagories, getExpenseById, getPaymentMethods, getPaymentStatus, getSubCatagories, postExpenses } from '../services/home';
 
 
 export const AddExpenseContext = createContext()
@@ -31,6 +31,7 @@ const AddExpenses = () => {
     const [isExpense, setIsExpense] = useState(true)
     const [isExpenseModal, setIsExpensesModal] = useState(false)
     const [modalData, setModalData] = useState([])
+    const [expense, setExpense] = useState()
     const [updateExpense, setUpdateExpense] = useState({
         expenseType: 1,
         subCatagoryId: 1,
@@ -38,8 +39,8 @@ const AddExpenses = () => {
         payStatusId: 1,
     })
 
-
-
+    const navigateData = useLocation()
+    const { expenseId } = navigateData.state
     const Navigate = useNavigate()
 
     console.log("Add expenses page")
@@ -123,8 +124,29 @@ const AddExpenses = () => {
         }
     })
 
-    useEffect(() => {
-    }, [])
+    const getExpenseByIdInfo = async () => {
+        try {
+            const request = await getExpenseById(expenseId)
+            const response = await request.data
+            setExpense(response.result)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useMemo(() => {
+        setUpdateExpense({
+            subCatagoryId: expense?.subcatagory?.id,
+            payMethodId: expense?.method?.id,
+            payStatusId: expense?.status?.id,
+            amount: expense?.amount,
+            description: expense?.description
+        })
+    }, [expense])
+    useMemo(() => {
+        getExpenseByIdInfo()
+    }, [expenseId])
+
+
 
     const contextObjcet = {
         updateExpense,
@@ -150,7 +172,7 @@ const AddExpenses = () => {
                     <div className='ae-fileds-section'>
                         <div className='ae-filed-container'>
                             <span>Amount</span>
-                            <input className='ae-filed-input' name='amount' onChange={handleUpdateExpenses} />
+                            <input className='ae-filed-input' defaultValue={expense && expense.amount} name='amount' onChange={handleUpdateExpenses} />
                             <div className='ae-filed-icons'>
                                 <div className='ae-f-icon-circle'>
                                     <img src={ammountImg} />
@@ -178,7 +200,10 @@ const AddExpenses = () => {
                                 style={{ color: isExpense ? 'rgb(236, 4, 4)' : 'green' }}
                                 onClick={handleCatagory}
                             >
-                                Uncatagorized
+                                {
+                                    expense ? expense?.catagory + ":" + expense?.subcatagory?.subCatagory : "Uncatagorized"
+                                }
+
                             </span>
                             <div className='ae-filed-icons'>
                                 <div className='ae-f-icon-circle'>
@@ -195,7 +220,10 @@ const AddExpenses = () => {
                                 style={{ color: isExpense ? 'rgb(236, 4, 4)' : 'green' }}
                                 onClick={handlePaymentMethod}
                             >
-                                Electronic Transfer </span>
+                                {
+                                    expense ? expense?.method?.method : "Electronic Transfer "
+                                }
+                            </span>
                             <div className='ae-filed-icons'>
                                 <div className='ae-f-icon-circle'>
                                     <img src={payMethodImg} />
@@ -209,7 +237,11 @@ const AddExpenses = () => {
                             <span>Status</span>
                             <span className='ae-filed-selection'
                                 style={{ color: isExpense ? 'rgb(236, 4, 4)' : 'green' }}
-                                onClick={handleStatus}>Uncleared </span>
+                                onClick={handleStatus}>
+                                {
+                                    expense ? expense?.status?.status : "Uncleared"
+                                }
+                            </span>
                             <div className='ae-filed-icons'>
                                 {/* <div className='ae-f-icon-circle'> */}
                                 <Link to='/add-expense/status' className='ae-f-icon-circle' >
@@ -223,7 +255,7 @@ const AddExpenses = () => {
                     <div className='ae-fileds-section'>
                         <div className='ae-filed-container'>
                             <span>Description</span>
-                            <input className='ae-filed-input' name='description' onChange={handleUpdateExpenses} />
+                            <input className='ae-filed-input' defaultValue={expense?.description} name='description' onChange={handleUpdateExpenses} />
                             <div className='ae-filed-icons'>
                                 <div className='ae-f-icon-circle' >
                                     <img src={cameraImg} />

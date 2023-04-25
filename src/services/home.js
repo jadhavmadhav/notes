@@ -18,14 +18,25 @@ export const getCatagories = () => {
 
 }
 
-export const getSubCatagories=(catagoryId)=>{
+export const getSubCatagories = (catagoryId) => {
     return http.get(`/subcatagory/${catagoryId}`)
 }
 
-export const postExpenses=(object)=>{
-    return http.post('/expense',object)
+export const postExpenses = (object) => {
+    return http.post('/expense', object)
 }
 
-export const getBarChart=()=>{
+export const getBarChart = () => {
     return http.get('/barchart')
+}
+
+export const getExpenseAnalyse = (from, to, all) => {
+    if (all) {
+        return http.get(`/expense?all=${all}`)
+    }
+    return http.get(`/expense?from=${from}&to=${to}`)
+}
+
+export const getExpenseById = (id) => {
+    return http.get(`/expense/${id}`)
 }

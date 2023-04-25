@@ -12,10 +12,14 @@ const Header = () => {
                     <div></div>
                     <div></div>
                 </div>
+                <div>
+                    <div className={style.searchSection}>
+                        <input />
+                        <img src={searchImg} />
 
-                <div style={{ width: '20px', height:'100%' }}>
-                    <img src={searchImg} style={{ width: '100%',color:'white' }} />
+                    </div>
                 </div>
+
             </div>
         </Fragment>
     );
