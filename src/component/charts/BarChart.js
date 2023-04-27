@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import moment from 'moment'
 
 import {
@@ -75,18 +75,20 @@ const renderCustomizedLabel = (props) => {
 };
 
 const HomeBarChart = () => {
-    const [income, setIncome] = React.useState([])
-    const [expense, setExpense] = React.useState([])
+    const [allData, setAllData] = useState([])
+    const [barData, setBarData] = useState()
+    const [stickColor, setStickColor] = useState("red")
 
-    console.log(income)
+    useMemo(() => {
+        setBarData(allData?.expense)
+    }, [allData])
 
     const GetBarData = async () => {
         const request = await getBarChart()
         const response = await request.data
 
         if (response.status === 200) {
-            setIncome(response.result?.income)
-            setExpense(response.result?.expense)
+            setAllData(response.result)
         }
     }
 
@@ -94,31 +96,58 @@ const HomeBarChart = () => {
         GetBarData()
     }, [])
 
+    const handleButton = (e) => {
+        if (e.target.value === "income") {
+            setBarData(allData?.income)
+            setStickColor("green")
+        } else {
+            setBarData(allData?.expense)
+            setStickColor("red")
+
+        }
+
+    }
 
 
     return (
-        <BarChart
-            width={350}
-            height={300}
-            data={income}
-            margin={{
-                top: 20,
-                // right: 30,
-                left: 0,
-                bottom: 5,
+        <div>
+            <div className='d-flex justify-content-between ' onChange={handleButton}>
+                <span>{allData?.startDate + " - " + allData?.lastDate} </span>
+                <div className='d-flex'>
+                    <div>
+                        <input type='radio' id='ex' name='expenseType' value='expense' defaultChecked />
+                        <label htmlFor='ex' className='ms-1'>Expense</label>
+                    </div>
+                    <div className='ms-2'>
+                        <input type='radio' id='in' name='expenseType' value='income' />
+                        <label htmlFor='in' className='ms-1' >Income</label>
+                    </div>
+                </div>
+            </div>
+            <BarChart
+                width={350}
+                height={300}
+                data={barData}
+                margin={{
+                    top: 20,
+                    // right: 30,
+                    left: 0,
+                    bottom: 5,
 
-            }}
-        >
+                }}
+            >
 
-            <CartesianGrid strokeDasharray="0 3" />
-            <XAxis dataKey={moment(data.createdDate).format("DD/MM")} />
-            <YAxis hide />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="total" fill="red" minPointSize={5} barSize={25}>
-                <LabelList dataKey="total" content={renderCustomizedLabel} />
-            </Bar>
-        </BarChart>
+                <CartesianGrid strokeDasharray="0 3" />
+                <XAxis dataKey={moment(data.createdDate).format("DD/MM")} />
+                <YAxis hide />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="total" fill={stickColor} minPointSize={5} barSize={25}>
+                    <LabelList dataKey="total" content={renderCustomizedLabel} />
+                </Bar>
+            </BarChart>
+        </div>
+
     );
 }
 

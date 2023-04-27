@@ -4,11 +4,12 @@
    box-sizing: border-box;
    font-size: 14px;
    font-weight: 500;
-   color: rgb(94, 94, 94);
+   color: rgb(94, 94, 94); 
  }
 
  /* ========================================================= */
 
+  
 
  .app-cards {
    background-color: white;
@@ -45,5 +46,8 @@
  .app-container {
    /* background-color: rgba(215, 215, 215, 0.073); */
    /* height: 100vh; */
-  
+   width: 768px;
+   position: relative;
+   margin: auto;
+
  }

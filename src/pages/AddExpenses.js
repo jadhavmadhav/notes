@@ -11,7 +11,7 @@ import ammountImg from '../assets/calculator.png'
 import cameraImg from '../assets/camera.png'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ExpenseModel from '../component/expenseModel';
-import { getCatagories, getExpenseById, getPaymentMethods, getPaymentStatus, getSubCatagories, postExpenses } from '../services/home';
+import { UpdateExpense, getCatagories, getExpenseById, getPaymentMethods, getPaymentStatus, getSubCatagories, postExpenses } from '../services/home';
 
 
 export const AddExpenseContext = createContext()
@@ -38,24 +38,49 @@ const AddExpenses = () => {
         payMethodId: 1,
         payStatusId: 1,
     })
-
+    console.log("updateExpense:", updateExpense)
     const navigateData = useLocation()
-    const { expenseId } = navigateData.state
-    const Navigate = useNavigate()
+    const expenseNavigateData = navigateData?.state
+    const expenseId = expenseNavigateData && expenseNavigateData?.expenseId
 
-    console.log("Add expenses page")
+    const Navigate = useNavigate()
 
     const handleUpdateExpenses = async (e) => {
         setUpdateExpense({ ...updateExpense, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = async () => {
+
+
+
+    const PostExpense = async () => {
         try {
             const request = await postExpenses(updateExpense)
             const response = await request.data
             response.status === 200 && Navigate('/')
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    const UpdateExpenseObject = async () => {
+        try {
+            const request = await UpdateExpense(expense.id, updateExpense)
+            const response = await request.data
+            response.status === 200 && Navigate('/')
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        const Value = e.target.innerHTML
+
+        if (Value === "Update") {
+            await UpdateExpenseObject()
+        } else {
+            await PostExpense()
+
         }
     }
 
@@ -98,6 +123,10 @@ const AddExpenses = () => {
             console.log(error)
         }
     }
+
+    const handletoggleButtons = () => {
+        setIsExpense(!isExpense)
+    }
     const handleStatus = () => {
         getAllPaymentStatus()
         setIsExpensesModal(!isExpenseModal)
@@ -129,12 +158,14 @@ const AddExpenses = () => {
             const request = await getExpenseById(expenseId)
             const response = await request.data
             setExpense(response.result)
+
         } catch (error) {
             console.log(error)
         }
     }
     useMemo(() => {
         setUpdateExpense({
+            ...updateExpense,
             subCatagoryId: expense?.subcatagory?.id,
             payMethodId: expense?.method?.id,
             payStatusId: expense?.status?.id,
@@ -143,11 +174,18 @@ const AddExpenses = () => {
         })
     }, [expense])
     useMemo(() => {
-        getExpenseByIdInfo()
+        getExpenseByIdInfo(expenseId)
     }, [expenseId])
 
+    useMemo(() => {
+        if (isExpense) {
+            setUpdateExpense({ ...updateExpense, expenseType: 1 })
+        } else {
+            setUpdateExpense({ ...updateExpense, expenseType: 2 })
 
-
+        }
+    }, [isExpense])
+    console.log("updateExpense", updateExpense)
     const contextObjcet = {
         updateExpense,
         setUpdateExpense
@@ -160,8 +198,8 @@ const AddExpenses = () => {
 
                 <div className='ae-topSection'>
                     <div className='ae-toggler-button ' >
-                        <span className='toggler-btn1' onClick={() => setIsExpense(!isExpense)} style={isExpense ? activeStyle : unActiveStyle}>Expense</span>
-                        <span className='toggler-btn2' onClick={() => setIsExpense(!isExpense)} style={!isExpense ? activeStyle : unActiveStyle}>Income</span>
+                        <span className='toggler-btn1' onClick={handletoggleButtons} style={isExpense ? activeStyle : unActiveStyle}>Expense</span>
+                        <span className='toggler-btn2' onClick={handletoggleButtons} style={!isExpense ? activeStyle : unActiveStyle}>Income</span>
                     </div>
                     <div className='ae-dateNtime'>
                         <span>{moment(new Date()).format("YYYY-MM-DD")}</span>
@@ -266,7 +304,7 @@ const AddExpenses = () => {
                     </div>
 
                     <div className='ae-btn-section' onClick={handleSubmit}>
-                        <button > Ok </button>
+                        <button >{expense ? "Update" : "Ok"}</button>
                     </div>
 
                 </div>

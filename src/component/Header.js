@@ -3,7 +3,8 @@ import searchImg from '../assets/search.png'
 import style from '../styles/Header.module.css'
 
 
-const Header = () => {
+const Header = () => { 
+
     return (
         <Fragment>
             <div className=' bg-dark p-2 d-flex justify-content-between'>

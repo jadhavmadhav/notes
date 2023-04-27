@@ -40,3 +40,7 @@ export const getExpenseAnalyse = (from, to, all) => {
 export const getExpenseById = (id) => {
     return http.get(`/expense/${id}`)
 }
+
+export const UpdateExpense = (id, object) => {
+    return http.put(`/expense/${id}`, object)
+}

@@ -213,19 +213,6 @@ const Home = () => {
 
 
         <div className='app-cards mt-2 d-flex flex-column justify-content-center'>
-          <div className='d-flex justify-content-between '>
-            <span>04/01 - 04/07</span>
-            <div className='d-flex'>
-              <div>
-                <input type='radio' id='ex' name='expenseType' value='1' />
-                <label htmlFor='ex' className='ms-1'>Expense</label>
-              </div>
-              <div className='ms-2'>
-                <input type='radio' id='in' name='expenseType' value='2' />
-                <label htmlFor='in' className='ms-1' >Income</label>
-              </div>
-            </div>
-          </div>
           <div className='d-flex justify-content-center'>
             <HomeBarChart />
           </div>

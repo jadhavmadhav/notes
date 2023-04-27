@@ -16,7 +16,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app-container">
-        <div className="position-sticky top-0 w-100" style={{zIndex:10}}>
+        <div className="position-sticky top-0 w-100" style={{ zIndex: 10 }}>
           <Header />
         </div>
         <Routes>
